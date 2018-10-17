@@ -1,4 +1,6 @@
-This software directory's primary function is to convert PCB design and layout artifacts to a gcode equivalent that the path planning framework can interpret.
+This software directory's function is to develop a framework to convert a .gbr
+file output into an intermeddiary gcode equivalent and then convert that into
+paths for the CNc. Those paths can then yield motor instructions for the CNC.
 
 Potential Useful Resources:
 [C++ tool](https://github.com/pcb2gcode/pcb2gcode)
