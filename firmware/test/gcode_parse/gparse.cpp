@@ -5,9 +5,9 @@ void GParse::Initialize(){
     Serial.begin(baud_);
     Help();
 
-    stepperX_->begin(RPM);
+    stepperX_->begin(rpm_);
     stepperX_->enable();
-    stepperY_->begin(RPM);
+    stepperY_->begin(rpm_);
     stepperY_->enable();
 }
 
@@ -79,7 +79,7 @@ void GParse::DrawLine(float newx, float newy){
 
     unsigned long counts;
     long over = 0;
-    if(dx_ > dy_){
+    if(dx_ > dy_){ // Stepping in the x direction dx times, step once if y for every dy/dx steps in x direction
         for(counts=0; counts < dx_; counts++){
             stepperX_->move(dirx_);
             over += dy_;
@@ -88,7 +88,7 @@ void GParse::DrawLine(float newx, float newy){
                 stepperY_->move(diry_);
             }
         }
-    }else{
+    }else{ // Stepping in the y direction dy times, step once if x for every dx/dy steps in y direction
         for(counts=0; counts < dy_; counts++){
             stepperY_->move(diry_);
             over += dx_;
