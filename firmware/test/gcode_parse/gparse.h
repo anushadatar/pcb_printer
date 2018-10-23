@@ -15,8 +15,9 @@ class GParse// : private Fsm
         void Processing();
 
         void Help();
-        float parseNum(char code, float val);
+        float Parsenum(char code, float val);
         void Reseti();
+        void DrawLine(float newx, float newy);
         
 
     private:
@@ -24,8 +25,11 @@ class GParse// : private Fsm
         const unsigned long baud_;
         A4988* stepperX_;
         A4988* stepperY_;
-        uint8_t i = 0;
+        uint8_t i_ = 0;
         char buffer[64];
+        float px_, py_;
+        int8_t dirx_, diry_;
+        float dx_, dy_;
 };
 
 
