@@ -9,6 +9,19 @@ void GParse::Initialize(){
     stepperX_->enable();
     stepperY_->begin(rpm_);
     stepperY_->enable();
+
+    stepperX_->setMicrostep(8);   // Set microstep mode to 1:8
+    // In 1:8 microstepping mode, one revolution takes 8 times as many microsteps
+    stepperX_->move(8 * 360);    // forward revolution
+    stepperX_->move(-8 * 360);   // reverse revolution
+
+    stepperY_->setMicrostep(8);   // Set microstep mode to 1:8
+    // In 1:8 microstepping mode, one revolution takes 8 times as many microsteps
+    stepperY_->move(8 * 360);    // forward revolution
+    stepperY_->move(-8 * 360);   // reverse revolution
+    
+    Reseti();
+    // stepperX_->begin(rpm_, microstep_);stepperY_->begin(rpm_, microstep_);
 }
 
 void GParse::Help(){
@@ -41,16 +54,21 @@ void GParse::Listening(){
 
 void GParse::Processing(){
     Serial.println(buffer);
-    Serial.println(i_);
+    Serial.print("i ");Serial.println(i_);
     int cmd=(int)ParseNum('G',-1);
-    Serial.println(cmd);
+    Serial.print("cmd ");Serial.println(cmd);
     switch(cmd){
         case 0: // move in a line
         case 1: // move in a line
             // set_feedrate(ParseNumber('F',fr));
-            int temp = ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_);
-            DrawLine( temp,
-                      ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
+            int tempx = ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_);
+            Serial.print("X ");Serial.println(tempx);
+            
+            int tempy = ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_);
+            Serial.print("Y ");Serial.println(tempy);
+            
+            DrawLine( tempx,
+                      tempy );
             break;
         // case 2: // clockwise arc
         // case 3: // counter-clockwise arc
@@ -80,39 +98,46 @@ float GParse::ParseNum(char code,float val) {
 void GParse::Reseti(){
     // Reset i to be 254, to be overflown at 254+2
     // this number allows to counter to keep working correctly
-    i_ = 254;
+    i_ = 255;
 }
 
 void GParse::DrawLine(float newx, float newy){
     dx_ = newx - px_;
     dy_ = newy - py_;
 
-    dirx_ = (dx_>0) ? 1:-1;
-    diry_ = (dy_>0) ? 1:-1;
-    dx_ = abs(dx_);
-    dy_ = abs(dy_);
+    // dirx_ = (dx_>0) ? 1:-1;
+    // diry_ = (dy_>0) ? 1:-1;
+    // dx_ = abs(dx_);
+    // dy_ = abs(dy_);
+    Serial.print("dx "); Serial.print(dx_); Serial.print("; dirx "); Serial.println(dirx_);
+    Serial.print("dy "); Serial.print(dy_); Serial.print("; diry "); Serial.println(diry_);
 
     unsigned long counts;
     long over = 0;
-    if(dx_ > dy_){ // Stepping in the x direction dx times, step once if y for every dy/dx steps in x direction
-        for(counts=0; counts < dx_; counts++){
-            stepperX_->move(dirx_);
-            over += dy_;
-            if(over>=dx_){
-                over -= dx_;
-                stepperY_->move(diry_);
-            }
-        }
-    }else{ // Stepping in the y direction dy times, step once if x for every dx/dy steps in y direction
-        for(counts=0; counts < dy_; counts++){
-            stepperY_->move(diry_);
-            over += dx_;
-            if(over>=dy_){
-                over -= dy_;
-                stepperX_->move(dirx_);
-            }
-        }
-    }
+    // if(dx_ > dy_){ // Stepping in the x direction dx times, step once if y for every dy/dx steps in x direction
+    //     for(counts=0; counts < dx_; counts++){
+    //         stepperX_->move(dirx_);
+    //         over += dy_;
+    //         if(over>=dx_){
+    //             over -= dx_;
+    //             stepperY_->move(diry_);
+    //         }
+    //         // Serial.println(counts);
+    //         delay(500);
+    //     }
+    // }else{ // Stepping in the y direction dy times, step once if x for every dx/dy steps in y direction
+    //     for(counts=0; counts < dy_; counts++){
+    //         stepperY_->move(diry_);
+    //         over += dx_;
+    //         if(over>=dy_){
+    //             over -= dy_;
+    //             stepperX_->move(dirx_);
+    //         }
+    //         delay(500);
+    //     }
+    // }
+    stepperX_->move(dx_);
+    stepperY_->move(dy_);
 
     px_ = newx;
     py_ = newy;
