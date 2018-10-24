@@ -1,5 +1,7 @@
 #include "gparse.h"
 
+#define CM_PER_SEGMENT 1
+
 void GParse::Initialize(){
     // Enable Serial Communication with the given baud rate
     Serial.begin(baud_);
@@ -58,30 +60,43 @@ void GParse::Processing(){
     int cmd=(int)ParseNum('G',-1);
     Serial.print("cmd ");Serial.println(cmd);
     switch(cmd){
+        switch(cmd){
         case 0: // move in a line
         case 1: // move in a line
+        {
             // set_feedrate(ParseNumber('F',fr));
-            int tempx = ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_);
-            Serial.print("X ");Serial.println(tempx);
-            
-            int tempy = ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_);
-            Serial.print("Y ");Serial.println(tempy);
-            
-            DrawLine( tempx,
-                      tempy );
+            int temp = ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_);
+            DrawLine( temp,
+                      ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
             break;
-        // case 2: // clockwise arc
-        // case 3: // counter-clockwise arc
+        }
+        case 2: // clockwise arc
+        {
+            float cx = ParseNum('I', (modeAbs_?px_:0)) + (modeAbs_?0:px_);
+            float cy = ParseNum('J', (modeAbs_?py_:0)) + (modeAbs_?0:py_);
+            float x =  ParseNum('X', (modeAbs_?px_:0)) + (modeAbs_?0:px_);
+            float y =  ParseNum('Y', (modeAbs_?py_:0)) + (modeAbs_?0:py_);
+            DrawArc(cx, cy, x, y, 1); 
+        }
+        case 3: // counter-clockwise arc
+        { 
+            float cx = ParseNum('I', (modeAbs_?px_:0)) + (modeAbs_?0:px_);
+            float cy = ParseNum('J', (modeAbs_?py_:0)) + (modeAbs_?0:py_);
+            float x =  ParseNum('X', (modeAbs_?px_:0)) + (modeAbs_?0:px_);
+            float y =  ParseNum('Y', (modeAbs_?py_:0)) + (modeAbs_?0:py_);
+            DrawArc(cx, cy, x, y, 0);        
+        }
         case 4: delay(ParseNum('P', 0)); break; // wait a while
         case 90: modeAbs_=1; break; // absolute mode
         case 91: modeAbs_=0; break; // relative mode
-        case 92: // set logical position
-            SetPosition( ParseNum('X',0),
-                         ParseNum('Y',0) );
-            break;
+      //  case 92: // set logical position
+        //    SetPosition( ParseNum('X',0),
+          //               ParseNum('Y',0) );
+           // break;
         default: break;
             
     }
+}
 }
 
 float GParse::ParseNum(char code,float val) {
@@ -141,6 +156,54 @@ void GParse::DrawLine(float newx, float newy){
 
     px_ = newx;
     py_ = newy;
+}
+float GParse::atangent(float dy,float dx) {
+  float a = atan2(dy,dx);
+  if(a<0) a = (PI*2.0)+a;
+  return a;
+}
+
+void GParse::DrawArc(float cx,float cy,float x,float y,float dir) {
+  // get radius
+  float dx = px_ - cx;
+  float dy = py_ - cy;
+  float radius=sqrt(dx*dx+dy*dy);
+
+  // find the sweep of the arc
+  float angle1 = atangent(dy,dx);
+  float angle2 = atangent(y-cy,x-cx);
+  float sweep = angle2-angle1;
+
+  if(dir>0 && sweep<0) angle2+=2*PI;
+  else if(dir == 0) angle1+=2*PI;
+
+  sweep=angle2-angle1;
+
+  // get length of arc
+  // float circumference=PI*2.0*radius;
+  // float len=sweep*circumference/(PI*2.0);
+  // simplifies to
+  float len = abs(sweep) * radius;
+
+  int i, num_segments = floor(len / CM_PER_SEGMENT);
+
+  // declare variables outside of loops because compilers can be really dumb and inefficient some times.
+  float nx, ny, nz, angle3, fraction;
+
+  for(i=0;i<num_segments;++i) {
+    // interpolate around the arc
+    fraction = ((float)i)/((float)num_segments);
+    angle3 = ( sweep * fraction ) + angle1;
+
+    // find the intermediate position
+    nx = cx + cos(angle3) * radius;
+    ny = cy + sin(angle3) * radius;
+    // make a line to that intermediate position
+    DrawLine(nx,ny);
+  }
+
+  // one last line hit the end
+  DrawLine(x,y);
 }
 
 void serialEvent(){
