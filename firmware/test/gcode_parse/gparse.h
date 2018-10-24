@@ -1,6 +1,5 @@
 #ifndef GPARSE_H
 #include <Arduino.h>
-#include "fsm.h"
 #include "A4988.h"
 // #include "BasicStepperDriver.h"
 
@@ -18,6 +17,8 @@ class GParse// : private Fsm
         float ParseNum(char code, float val);
         void Reseti();
         void DrawLine(float newx, float newy);
+        void DrawArc(float cx,float cy,float x,float y,float dir);
+        float atangent(float dy,float dx);
         void SetPosition(float newx, float newy);
         
 
