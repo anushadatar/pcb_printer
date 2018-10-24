@@ -1,13 +1,17 @@
 import serial, time
 
 class Formatter():
-    def __init__(self, readpath, savepath="results.gcode"):
+    def __init__(self, readpath, savepath=time.strftime("%Y%m%d-%H%M%S")+".gcode"):
+        """ Initate the class with the path to source gcode and the output gcode 
+        """
         self.readpath = readpath
-        self.savepath = time.strftime("%Y%m%d-%H%M%S")+".gcode"
+        self.savepath = savepath
         self.formatted_b = False
         self.formatted = []
 
     def format(self):
+        """ Read in the source gcode as a list and append formatted results to a list
+        """
         with open(self.readpath, 'r+') as f:
             self.content = f.readlines()
             for each in self.content:
@@ -22,6 +26,8 @@ class Formatter():
             print(self.formatted)
 
     def store(self):
+        """ Store the list of formatted gcode to the output path
+        """
         if(self.formatted_b):
             with open(self.savepath, 'w+') as f:
                 f.writelines(self.formatted)
@@ -46,24 +52,6 @@ class Formatter():
             # open serial port
             self.serialPort = serial.Serial(arduinoComPort, baudRate, timeout=1)
             print('Serial Port ttyACM1\n')
-
-
-# filepath = "test_data/rectangle/test.gcode"
-
-# with open(filepath, 'r+') as f:
-#     formatted = []
-#     content = f.readlines()
-#     for each in content:
-#         if each.find('X') != -1:
-#             Y_pos = each.find('Y')
-#             each = each[:Y_pos] + " " + each[Y_pos:]
-#             if Y_pos != -1:
-#                 Z_pos = each.find('Z')
-#                 each = each[:Z_pos] + " " + each[Z_pos:]
-#         formatted.append(each)
-#     print(formatted)
-
-#     f.close()
 
 if __name__ == "__main__":
     Format = Formatter("test_data/rectangle/test.gcode")
