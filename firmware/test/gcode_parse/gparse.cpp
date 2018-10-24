@@ -42,16 +42,31 @@ void GParse::Listening(){
 void GParse::Processing(){
     Serial.println(buffer);
     Serial.println(i_);
-    float cmd=Parsenum('G',-1);
+    int cmd=(int)ParseNum('G',-1);
     Serial.println(cmd);
-    // switch(cmd){
-    //     case 0:
-    //     case 1:
+    switch(cmd){
+        case 0: // move in a line
+        case 1: // move in a line
+            // set_feedrate(ParseNumber('F',fr));
+            int temp = ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_);
+            DrawLine( temp,
+                      ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
+            break;
+        // case 2: // clockwise arc
+        // case 3: // counter-clockwise arc
+        case 4: delay(ParseNum('P', 0)); break; // wait a while
+        case 90: modeAbs_=1; break; // absolute mode
+        case 91: modeAbs_=0; break; // relative mode
+        case 92: // set logical position
+            SetPosition( ParseNum('X',0),
+                         ParseNum('Y',0) );
+            break;
+        default: break;
             
-    // }
+    }
 }
 
-float GParse::Parsenum(char code,float val) {
+float GParse::ParseNum(char code,float val) {
   char *ptr=buffer;  // start at the beginning of buffer
   while((long)ptr > 1 && (*ptr) && (long)ptr < (long)buffer+i_) {  // walk to the end
     if(*ptr==code) {  // if you find code on your walk,

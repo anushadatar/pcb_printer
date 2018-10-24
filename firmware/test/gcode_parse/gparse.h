@@ -15,9 +15,10 @@ class GParse// : private Fsm
         void Processing();
 
         void Help();
-        float Parsenum(char code, float val);
+        float ParseNum(char code, float val);
         void Reseti();
         void DrawLine(float newx, float newy);
+        void SetPosition(float newx, float newy);
         
 
     private:
@@ -31,6 +32,7 @@ class GParse// : private Fsm
         float px_, py_;
         int8_t dirx_, diry_;
         float dx_, dy_;
+        uint8_t modeAbs_;
 };
 
 
