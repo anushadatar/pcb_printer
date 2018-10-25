@@ -21,7 +21,7 @@ class Formatter():
                     if Y_pos != -1: # Format Z when there are both X and Y before it
                         Z_pos = each.find('Z')
                         each = each[:Z_pos] + " " + each[Z_pos:]
-                self.formatted.append(each)
+                self.formatted.append(" "+each)
             self.formatted_b = True
             print(self.formatted)
 

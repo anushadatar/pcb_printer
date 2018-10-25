@@ -60,11 +60,11 @@ void GParse::Processing(){
     int cmd=(int)ParseNum('G',-1);
     Serial.print("cmd ");Serial.println(cmd);
     switch(cmd){
-        switch(cmd){
         case 0: // move in a line
         case 1: // move in a line
         {
             // set_feedrate(ParseNumber('F',fr));
+            // Serial.println("????");
             int temp = ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_);
             DrawLine( temp,
                       ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
@@ -77,6 +77,7 @@ void GParse::Processing(){
             float x =  ParseNum('X', (modeAbs_?px_:0)) + (modeAbs_?0:px_);
             float y =  ParseNum('Y', (modeAbs_?py_:0)) + (modeAbs_?0:py_);
             DrawArc(cx, cy, x, y, 1); 
+            break;
         }
         case 3: // counter-clockwise arc
         { 
@@ -85,6 +86,7 @@ void GParse::Processing(){
             float x =  ParseNum('X', (modeAbs_?px_:0)) + (modeAbs_?0:px_);
             float y =  ParseNum('Y', (modeAbs_?py_:0)) + (modeAbs_?0:py_);
             DrawArc(cx, cy, x, y, 0);        
+            break;
         }
         case 4: delay(ParseNum('P', 0)); break; // wait a while
         case 90: modeAbs_=1; break; // absolute mode
@@ -94,9 +96,7 @@ void GParse::Processing(){
           //               ParseNum('Y',0) );
            // break;
         default: break;
-            
     }
-}
 }
 
 float GParse::ParseNum(char code,float val) {
@@ -113,97 +113,96 @@ float GParse::ParseNum(char code,float val) {
 void GParse::Reseti(){
     // Reset i to be 254, to be overflown at 254+2
     // this number allows to counter to keep working correctly
-    i_ = 255;
+    i_ = 0;
 }
 
 void GParse::DrawLine(float newx, float newy){
     dx_ = newx - px_;
     dy_ = newy - py_;
-
-    // dirx_ = (dx_>0) ? 1:-1;
-    // diry_ = (dy_>0) ? 1:-1;
-    // dx_ = abs(dx_);
-    // dy_ = abs(dy_);
+    Serial.print("dx "); Serial.println(dx_); 
+    Serial.print("dy "); Serial.println(dy_);
+    dirx_ = (dx_>0) ? 1:-1;
+    diry_ = (dy_>0) ? 1:-1;
+    dx_ = abs(dx_);
+    dy_ = abs(dy_);
     Serial.print("dx "); Serial.print(dx_); Serial.print("; dirx "); Serial.println(dirx_);
     Serial.print("dy "); Serial.print(dy_); Serial.print("; diry "); Serial.println(diry_);
 
     unsigned long counts;
     long over = 0;
-    // if(dx_ > dy_){ // Stepping in the x direction dx times, step once if y for every dy/dx steps in x direction
-    //     for(counts=0; counts < dx_; counts++){
-    //         stepperX_->move(dirx_);
-    //         over += dy_;
-    //         if(over>=dx_){
-    //             over -= dx_;
-    //             stepperY_->move(diry_);
-    //         }
-    //         // Serial.println(counts);
-    //         delay(500);
-    //     }
-    // }else{ // Stepping in the y direction dy times, step once if x for every dx/dy steps in y direction
-    //     for(counts=0; counts < dy_; counts++){
-    //         stepperY_->move(diry_);
-    //         over += dx_;
-    //         if(over>=dy_){
-    //             over -= dy_;
-    //             stepperX_->move(dirx_);
-    //         }
-    //         delay(500);
-    //     }
-    // }
-    stepperX_->move(dx_);
-    stepperY_->move(dy_);
+    if(dx_ > dy_){ // Stepping in the x direction dx times, step once if y for every dy/dx steps in x direction
+        for(counts=0; counts < dx_; counts++){
+            stepperX_->move(dirx_);
+            over += dy_;
+            if(over>=dx_){
+                over -= dx_;
+                stepperY_->move(diry_);
+            }
+            // Serial.println(counts);
+            // delay(500);
+        }
+    }else{ // Stepping in the y direction dy times, step once if x for every dx/dy steps in y direction
+        for(counts=0; counts < dy_; counts++){
+            stepperY_->move(diry_);
+            over += dx_;
+            if(over>=dy_){
+                over -= dy_;
+                stepperX_->move(dirx_);
+            }
+            // delay(500);
+        }
+    }
 
     px_ = newx;
     py_ = newy;
 }
 float GParse::atangent(float dy,float dx) {
-  float a = atan2(dy,dx);
-  if(a<0) a = (PI*2.0)+a;
-  return a;
+    float a = atan2(dy,dx);
+    if(a<0) a = (PI*2.0)+a;
+    return a;
 }
 
 void GParse::DrawArc(float cx,float cy,float x,float y,float dir) {
-  // get radius
-  float dx = px_ - cx;
-  float dy = py_ - cy;
-  float radius=sqrt(dx*dx+dy*dy);
+    // get radius
+    float dx = px_ - cx;
+    float dy = py_ - cy;
+    float radius=sqrt(dx*dx+dy*dy);
 
-  // find the sweep of the arc
-  float angle1 = atangent(dy,dx);
-  float angle2 = atangent(y-cy,x-cx);
-  float sweep = angle2-angle1;
+    // find the sweep of the arc
+    float angle1 = atangent(dy,dx);
+    float angle2 = atangent(y-cy,x-cx);
+    float sweep = angle2-angle1;
 
-  if(dir>0 && sweep<0) angle2+=2*PI;
-  else if(dir == 0) angle1+=2*PI;
+    if(dir>0 && sweep<0) angle2+=2*PI;
+    else if(dir == 0) angle1+=2*PI;
 
-  sweep=angle2-angle1;
+    sweep=angle2-angle1;
 
-  // get length of arc
-  // float circumference=PI*2.0*radius;
-  // float len=sweep*circumference/(PI*2.0);
-  // simplifies to
-  float len = abs(sweep) * radius;
+    // get length of arc
+    // float circumference=PI*2.0*radius;
+    // float len=sweep*circumference/(PI*2.0);
+    // simplifies to
+    float len = abs(sweep) * radius;
 
-  int i, num_segments = floor(len / CM_PER_SEGMENT);
+    int i, num_segments = floor(len / CM_PER_SEGMENT);
 
-  // declare variables outside of loops because compilers can be really dumb and inefficient some times.
-  float nx, ny, nz, angle3, fraction;
+    // declare variables outside of loops because compilers can be really dumb and inefficient some times.
+    float nx, ny, nz, angle3, fraction;
 
-  for(i=0;i<num_segments;++i) {
-    // interpolate around the arc
-    fraction = ((float)i)/((float)num_segments);
-    angle3 = ( sweep * fraction ) + angle1;
+    for(i=0;i<num_segments;++i) {
+        // interpolate around the arc
+        fraction = ((float)i)/((float)num_segments);
+        angle3 = ( sweep * fraction ) + angle1;
 
-    // find the intermediate position
-    nx = cx + cos(angle3) * radius;
-    ny = cy + sin(angle3) * radius;
-    // make a line to that intermediate position
-    DrawLine(nx,ny);
-  }
+        // find the intermediate position
+        nx = cx + cos(angle3) * radius;
+        ny = cy + sin(angle3) * radius;
+        // make a line to that intermediate position
+        DrawLine(nx,ny);
+    }
 
-  // one last line hit the end
-  DrawLine(x,y);
+    // one last line hit the end
+    DrawLine(x,y);
 }
 
 void serialEvent(){
