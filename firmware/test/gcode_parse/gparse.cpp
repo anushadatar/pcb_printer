@@ -1,6 +1,6 @@
 #include "gparse.h"
 
-#define CM_PER_SEGMENT 1
+const float CM_PER_SEGMENT = 100;
 
 void GParse::Initialize(){
     // Enable Serial Communication with the given baud rate
@@ -184,8 +184,9 @@ void GParse::DrawArc(float cx,float cy,float x,float y,float dir) {
     // simplifies to
     float len = abs(sweep) * radius;
 
-    int i, num_segments = floor(len / CM_PER_SEGMENT);
-
+    int i;
+    int num_segments = (int)round(len / CM_PER_SEGMENT);
+    Serial.println("Number of Segments: "); Serial.print(num_segments);
     // declare variables outside of loops because compilers can be really dumb and inefficient some times.
     float nx, ny, nz, angle3, fraction;
 
