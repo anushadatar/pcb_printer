@@ -37,7 +37,7 @@ class GParse// : private Fsm
         float py_=0;
         int8_t dirx_, diry_;
         float dx_, dy_;
-        uint8_t modeAbs_=1;
+        uint8_t modeAbs_=0;
 };
 
 

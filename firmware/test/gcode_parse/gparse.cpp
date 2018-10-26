@@ -203,7 +203,7 @@ void GParse::DrawArc(float cx,float cy,float x,float y,float dir) {
     }
 
     // one last line hit the end
-    DrawLine(x,y);
+    // DrawLine(x,y);
 }
 
 void serialEvent(){
