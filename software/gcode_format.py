@@ -1,4 +1,28 @@
+from optparse import OptionParser
+import sys
+import os
 import serial, time
+
+def init_opts():
+    parser = OptionParser()
+    parser.add_option("-t", "--type", action="store_true",
+                      dest="type", default=False,
+                      help="Type in the message rather than use a file")
+    parser.add_option("-f", "--file", action="store_true",
+                      dest="file", default=False,
+                      help="Use a file rather than type in the message")
+    parser.add_option("-e", "--encrypt", action="store_true",
+                      dest="encrypt", default=False,
+                      help="Encrypt the message")
+    parser.add_option("-d", "--decrypt", action="store_true",
+                      dest="decrypt", default=False,
+                      help="Decrypt the message")
+    parser.add_option("-s", "--shift", action="store",
+                      dest="shift", default=0, type='int',
+                      help="Th number to shift the letters by")
+    options, args = parser.parse_args()
+    return options, args
+
 
 class Formatter():
     def __init__(self, readpath, savepath=time.strftime("%Y%m%d-%H%M%S")+".gcode"):
@@ -34,24 +58,6 @@ class Formatter():
                 f.close()
         else:
             print("Formatting not completed, not saving.\n")
-
-    def config_serial(self, baudrate=115520):
-        """ Set up the serial port to communicate with Arduino
-        """
-        try: # Try either ttyACM0 or ttyACM1 because Arduino switches around between these two
-            arduinoComPort = "/dev/ttyACM0"
-            # set baud rate
-            baudRate = baudrate
-            # open serial port
-            self.serialPort = serial.Serial(arduinoComPort, baudRate, timeout=1)
-            print('Serial Port ttyACM0')
-        except:
-            arduinoComPort = "/dev/ttyACM1"
-            # set baud rate
-            baudRate = baudrate
-            # open serial port
-            self.serialPort = serial.Serial(arduinoComPort, baudRate, timeout=1)
-            print('Serial Port ttyACM1\n')
 
 if __name__ == "__main__":
     Format = Formatter("test_data/rectangle/test.gcode")
