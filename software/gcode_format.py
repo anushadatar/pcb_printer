@@ -1,8 +1,15 @@
+import serial, time
 from optparse import OptionParser
 import sys
 import os
-import serial, time
 
+def init_opts():
+    parser = OptionParser()
+    parser.add_option("-p", action="store",
+                      dest="path", default=0, type=str,
+                      help="path of the gcode file to stream")
+    options, args = parser.parse_args()
+    return options, args
 
 class Formatter():
     def __init__(self, readpath, savepath=time.strftime("%Y%m%d-%H%M%S")+".gcode"):
@@ -40,6 +47,7 @@ class Formatter():
             print("Formatting not completed, not saving.\n")
 
 if __name__ == "__main__":
-    Format = Formatter("test_data/rectangle/test.gcode")
+    opts, args = init_opts()
+    Format = Formatter(opts.path)
     Format.format()
     Format.store()

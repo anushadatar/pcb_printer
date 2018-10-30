@@ -1,11 +1,16 @@
 import serial, time
-
+from optparse import OptionParser
+import sys
+import os
 
 def init_opts():
     parser = OptionParser()
     parser.add_option("-s", action="store_true",
                       dest="stream", default=False,
                       help="-s sets streaming mode to be true otherwise only send one direction command")
+    parser.add_option("-p", action="store",
+                      dest="path", default=0, type=str,
+                      help="path of the gcode file to stream")
     parser.add_option("-x", action="store",
                       dest="xmove", default=0, type=int,
                       help="Distance to move in the x direction")
@@ -26,6 +31,7 @@ class Streamer():
         self.initialized = True
         self.opts = opts
         self.args = args
+        self.lineOfData = 0
 
     def config_serial(self, baudrate=115520):
         """ Set up the serial port to communicate with Arduino
@@ -49,20 +55,31 @@ class Streamer():
         if self.opts.stream:
             self.serialPort.write(" G90")
 
-    def open_gcode(self, readpath):
+    def open_gcode(self):
         """ Open the gcode file
         """
-        self.readpath = readpath
+        # Open the gcode file
+        self.readpath = self.opts.path
         self.gcodefile = open(self.readpath, 'r+')
+        # Load content from gcode file
         self.gcodecontent = self.gcodefile.readlines()
 
-    # def stream_gcode(self):
-    #     """ Stream gcode one line at a time once an ack signal is
-    #     given for the last command
-    #     """
+    def stream_gcode(self):
+        """ Stream gcode one line at a time once an ack signal is
+        given for the last command
+        """
+        if self.opts.stream:
+            for each_line in self.gcodecontent:
+                self.serialPort.write(each_line)
+                while self.lineOfData!='\r\n':
+                    try:
+                        self.lineOfData = self.serialPort.readline().decode()
+                    except:
+                        print("bad serial format")
+                print("movement successful!")
         
     def direction(self):
-        """
+        """ Move an axis in a certain direction in a given amount
         """
         if not self.opts.stream:
             if self.opts.x != 0:
@@ -75,8 +92,6 @@ class Streamer():
                 temp = " G00 Z" + str(self.opts.z) + "\n"
                 self.serialPort.write(temp)
 
-
-
     def exit(self):
         """ Perform exit conditions
         """
@@ -85,5 +100,16 @@ class Streamer():
 
 def main():
     opts, args = init_opts()
+    
+    Stream = Streamer(opts, args)
 
-# if __name__ == "__main__":
+    Stream.config_serial()
+
+    Stream.open_gcode()
+
+    Stream.direction()
+
+    Stream.exit()
+
+if __name__ == "__main__":
+    main()
