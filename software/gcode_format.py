@@ -3,26 +3,6 @@ import sys
 import os
 import serial, time
 
-def init_opts():
-    parser = OptionParser()
-    parser.add_option("-t", "--type", action="store_true",
-                      dest="type", default=False,
-                      help="Type in the message rather than use a file")
-    parser.add_option("-f", "--file", action="store_true",
-                      dest="file", default=False,
-                      help="Use a file rather than type in the message")
-    parser.add_option("-e", "--encrypt", action="store_true",
-                      dest="encrypt", default=False,
-                      help="Encrypt the message")
-    parser.add_option("-d", "--decrypt", action="store_true",
-                      dest="decrypt", default=False,
-                      help="Decrypt the message")
-    parser.add_option("-s", "--shift", action="store",
-                      dest="shift", default=0, type='int',
-                      help="Th number to shift the letters by")
-    options, args = parser.parse_args()
-    return options, args
-
 
 class Formatter():
     def __init__(self, readpath, savepath=time.strftime("%Y%m%d-%H%M%S")+".gcode"):
