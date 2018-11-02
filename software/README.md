@@ -21,6 +21,7 @@ make
 sudo make install
 ~~~~~
 - [PyQt4](https://www.riverbankcomputing.com/software/pyqt/download)
+
 Download the newest stable source .tar.gz file from [here](https://www.riverbankcomputing.com/software/sip/download). Untar it using
 `tar -xvf [folderName] `. 
 
@@ -31,7 +32,9 @@ python3 configure.py
 make
 sudo make install
 ~~~~~
-Finally, actually install flatcam. Grab the zip file for [Flatcam 8.5](https://bitbucket.org/jpcgt/flatcam/downloads/) from [here](https://bitbucket.org/jpcgt/flatcam/downloads/).
+- [Flatcam 8.5](https://bitbucket.org/jpcgt/flatcam/downloads/) 
+
+Finally, actually install flatcam. Grab the zip file for Flatcam from [here](https://bitbucket.org/jpcgt/flatcam/downloads/).
 ~~~~
 cd [folderName]
 chmod +x setup_ubuntu.sh
