@@ -1,11 +1,9 @@
 This software directory's function is to develop a framework to convert a .gbr
-file output into an intermeddiary gcode equivalent and then convert that into
-paths for the CNc. Those paths can then yield motor instructions for the CNC.
+file output into a gcode equivalent file (containing coordinates and paths) and then convert that into
+paths for the CNC. Those paths can then yield motor instructions for the CNC.
 
-The main path planning is handled by the third-party tool Flatcam, which can be
-downloaded from [here](http://flatcam.org/manual/installation.html). Successful 
-implementation on the Raspberry Pi platform requires modifications to the software
-stack - contact us for details.
+The main path planning is handled by the third-party tool Flatcam. Installation can be tricky; streamlined Ubuntu instructions
+are included below. Raspberry Pi setup requires additional adjustments to the Flatam stack - contact us for details!
 
 ## Dev Framework: Ubuntu Setup Instructions
 While the final project will likely use a Raspberry Pi to setup up computation and screaming, it can often be more convenient to use a machine with Ubuntu for software and testing. To set up this framework, first install [Flatcam 8.2](https://bitbucket.org/jpcgt/flatcam/downloads/) from source - download the folder for Ubuntu, unzip it, and run the setup_ubuntu bash script. This will install a variety of necessary dependencies. 	While the final project will likely use a Raspberry Pi to setup up computation and screaming, it can often be more convenient to use a machine with Ubuntu for software and testing. To set up this framework, first install [Flatcam 8.2](https://bitbucket.org/jpcgt/flatcam/downloads/) from source - download the folder for Ubuntu, unzip it, and run the setup_ubuntu bash script. This will install a variety of necessary dependencies. 
