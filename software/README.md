@@ -6,7 +6,7 @@ The main path planning is handled by the third-party tool Flatcam. Installation 
 are included below. Raspberry Pi setup requires additional adjustments to the Flatam stack - contact us for details!
 
 ## Dev Framework: Ubuntu Setup Instructions
-While the final project will likely use a Raspberry Pi to setup up computation and screaming, it can often be more convenient to use a machine with Ubuntu for software and testing. To set up this framework, first install [Flatcam 8.2](https://bitbucket.org/jpcgt/flatcam/downloads/) from source - download the folder for Ubuntu, unzip it, and run the setup_ubuntu bash script. This will install a variety of necessary dependencies. 	While the final project will likely use a Raspberry Pi to setup up computation and screaming, it can often be more convenient to use a machine with Ubuntu for software and testing. To set up this framework, first install [Flatcam 8.2](https://bitbucket.org/jpcgt/flatcam/downloads/) from source - download the folder for Ubuntu, unzip it, and run the setup_ubuntu bash script. This will install a variety of necessary dependencies. 
+While the final project will likely use a Raspberry Pi to setup up computation and screaming, it can often be more convenient to use a machine with Ubuntu for software and testing. To set up this framework, first install the Flatcam Dependencies:
 Some of the dependencies will need to be installed separately:
  - [SIP](https://www.riverbankcomputing.com/software/sip/download)
  
@@ -31,6 +31,13 @@ python3 configure.py
 make
 sudo make install
 ~~~~~
+Finally, actually install flatcam. Grab the zip file for [Flatcam 8.5](https://bitbucket.org/jpcgt/flatcam/downloads/) from [here](https://bitbucket.org/jpcgt/flatcam/downloads/).
+~~~~
+cd [folderName]
+chmod +x setup_ubuntu.sh
+sudo ./setup_ubuntu.sh
+python FlatCAM.py
+~~~~
 
 <b> Note that this currently uses Python2. One day, when Anusha and Josh ascend to true open source hackerdudes, it will use python3, 
  like on the Raspi. Today is not that day. </b>
