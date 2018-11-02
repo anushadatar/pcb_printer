@@ -27,11 +27,13 @@ Download the newest stable source .tar.gz file from [here](https://www.riverbank
 Then, install the package with the following commands. 
 ~~~~~
 cd [folderName]
-$qmake_location = whereis qmake
-python3 configure.py -q $qmake_location
+python3 configure.py 
 make
 sudo make install
 ~~~~~
+
+<b> Note that this currently uses Python2. One day, when Anusha and Josh ascend to true open source hackerdudes, it will use python3, 
+ like on the Raspi. Today is not that day. </b>
 
 Potentially Useful Resources:
 [C++ tool](https://github.com/pcb2gcode/pcb2gcode)
