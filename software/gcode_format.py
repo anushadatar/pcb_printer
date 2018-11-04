@@ -19,22 +19,64 @@ class Formatter():
         self.savepath = savepath
         self.formatted_b = False
         self.formatted = []
+        self.thread = 60/127
+        self.step = 200
+        self.microstep = 8
+        self.coefficient = self.thread * self.step * self.microstep
 
     def format(self):
         """ Read in the source gcode as a list and append formatted results to a list
         """
         with open(self.readpath, 'r+') as f:
             self.content = f.readlines()
-            for each in self.content:
-                if each.find('X') != -1: #Format Y when there is X before it
-                    Y_pos = each.find('Y')
-                    each = each[:Y_pos] + " " + each[Y_pos:]
-                    if Y_pos != -1: # Format Z when there are both X and Y before it
-                        Z_pos = each.find('Z')
-                        each = each[:Z_pos] + " " + each[Z_pos:]
-                self.formatted.append(" "+each)
+            self.formatConvert(self.content)
             self.formatted_b = True
             print(self.formatted)
+
+    def formatConvert(self, content):
+        for each in content:
+            X_pos = each.find('X')                       # First find the index of X
+            Y_pos = each.find('Y')
+            Z_pos = each.find('Z')
+
+            """ If statement to convert and format each line of our gcode to match the actual dimension
+                1. If a line begins with X, find the index of X, format and convert the number,
+                    then continue on to format either Y or Z or both
+                2. If a line begins with Y, find the index of Y, format and convert the number,
+                    then continue on to format Z
+                3. If a line begins with Z, find the index of Y, format and convert the number       
+            """    
+            if X_pos != -1:                                 # Format Y only when there is X before it
+                if Y_pos != -1:                                # Format Z when there is Y before it   
+                    each = self.insertCorrectted(each, X_pos, Y_pos)
+                    Y_pos = each.find('Y')                          # Find the index of Y again because we modified the string
+                    Z_pos = each.find('Z')
+                    each = self.insertCorrectted(each, Y_pos, Z_pos)
+                    Z_pos = each.find('Z')
+                    if Z_pos != -1:
+                        NL_pos = each.find('\n')
+                        each = self.insertCorrectted(each, Z_pos, NL_pos)
+                elif Z_pos != -1:
+                    each = self.insertCorrectted(each, X_pos, Z_pos)
+                    Z_pos = each.find('Z')
+                    NL_pos = each.find('\n')
+                    each = self.insertCorrectted(each, Z_pos, NL_pos)
+
+            elif Y_pos != -1:                                # Format Z when there is Y before it   
+                Z_pos = each.find('Z')
+                each = self.insertCorrectted(each, Y_pos, Z_pos)
+                if Z_pos != -1:
+                    NL_pos = each.find('\n')
+                    each = self.insertCorrectted(each, Z_pos, NL_pos)
+
+            elif Z_pos != -1:               
+                NL_pos = each.find('\n')
+                each = self.insertCorrectted(each, Z_pos, NL_pos)
+            self.formatted.append(" "+each)
+        
+    def insertCorrectted(self, each, start_pos, end_pos):
+        num = float(each[start_pos+1:end_pos]) * self.coefficient
+        return each[:start_pos+1] + str(num) + " " + each[end_pos:]
 
     def store(self):
         """ Store the list of formatted gcode to the output path
