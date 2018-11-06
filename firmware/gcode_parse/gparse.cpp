@@ -41,8 +41,8 @@ void GParse::Listening(){
     if(Serial.available()){
         char c = Serial.read();
         buffer[i_++] = c;
-        if(c=='$') {
-            Serial.print(F("\r\n")); 
+        if(c=='\n') {
+            Serial.print(F("$")); 
             buffer[i_]=(char)0;
             Processing();
             Reseti();

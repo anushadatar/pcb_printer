@@ -53,7 +53,7 @@ class Streamer():
 
         # Allow arduino to stay in relative mode unless we are streaming a gcode file
         if self.opts.stream:
-            self.serialPort.write(" G90")
+            self.serialPort.write(" G90".encode())
 
     def open_gcode(self):
         """ Open the gcode file
@@ -70,8 +70,8 @@ class Streamer():
         """
         if self.opts.stream:
             for each_line in self.gcodecontent:
-                self.serialPort.write(each_line)
-                while self.lineOfData!='\r\n':
+                self.serialPort.write(each_line.encode())
+                while self.lineOfData!='$':
                     try:
                         self.lineOfData = self.serialPort.readline().decode()
                     except:
@@ -84,13 +84,13 @@ class Streamer():
         if not self.opts.stream:
             if self.opts.x != 0:
                 temp = " G00 X" + str(self.opts.x) + "\n"
-                self.serialPort.write(temp)
+                self.serialPort.write(temp.encode())
             elif self.opts.y != 0:
                 temp = " G00 Y" + str(self.opts.y) + "\n"
-                self.serialPort.write(temp)
+                self.serialPort.write(temp.encode())
             elif self.opts.z != 0:
                 temp = " G00 Z" + str(self.opts.z) + "\n"
-                self.serialPort.write(temp)
+                self.serialPort.write(temp.encode())
 
     def exit(self):
         """ Perform exit conditions
