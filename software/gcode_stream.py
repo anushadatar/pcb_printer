@@ -109,6 +109,8 @@ def main():
 
     Stream.direction()
 
+    Stream.stream_gcode()
+
     Stream.exit()
 
 if __name__ == "__main__":
