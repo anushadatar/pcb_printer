@@ -1,8 +1,8 @@
 #include "gparse.h"
 // Motor steps per revolution. Most steppers are 200 steps or 1.8 degrees/step
 #define MOTOR_STEPS 200
-#define RPM 60
-#define MICROSTEPS 1
+#define RPM 40
+#define MICROSTEPS 8
 
 // #define DIR 8
 // #define STEP 9
@@ -20,7 +20,7 @@ A4988 stepperX(MOTOR_STEPS, DIRX_pin, STEPX_pin, ENABLE, MS1, MS2, MS3);
 A4988 stepperY(MOTOR_STEPS, DIRY_pin, STEPY_pin, ENABLE, MS1, MS2, MS3);
 // BasicStepperDriver stepperX(MOTOR_STEPS, DIRX_pin, STEPX_pin);
 // BasicStepperDriver stepperY(MOTOR_STEPS, DIRY_pin, STEPY_pin);
-GParse parser(115200, &stepperX, &stepperY, RPM, MICROSTEPS);
+GParse parser(250000, &stepperX, &stepperY, RPM, MICROSTEPS);
 void setup() {
   // put your setup code here, to run once:
   parser.Initialize();

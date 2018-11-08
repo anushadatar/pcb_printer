@@ -33,7 +33,7 @@ class Streamer():
         self.args = args
         self.lineOfData = "$"
 
-    def config_serial(self, baudrate=115520):
+    def config_serial(self, baudrate=250000):
         """ Set up the serial port to communicate with Arduino
         """
         try: # Try either ttyACM0 or ttyACM1 because Arduino switches around between these two
@@ -51,7 +51,7 @@ class Streamer():
             self.serialPort = serial.Serial(self.arduinoComPort,self.baudRate, timeout=1)
             print('Serial Port ttyACM1\n')
 
-        time.sleep(5)
+        time.sleep(20)
         # Allow arduino to stay in relative mode unless we are streaming a gcode file
         if self.opts.stream:
             self.serialPort.write(" G90\n".encode())
@@ -61,11 +61,12 @@ class Streamer():
     def open_gcode(self):
         """ Open the gcode file
         """
-        # Open the gcode file
-        self.readpath = self.opts.path
-        self.gcodefile = open(self.readpath, 'r+')
-        # Load content from gcode file
-        self.gcodecontent = self.gcodefile.readlines()
+        if self.opts.stream:
+            # Open the gcode file
+            self.readpath = self.opts.path
+            self.gcodefile = open(self.readpath, 'r+')
+            # Load content from gcode file
+            self.gcodecontent = self.gcodefile.readlines()
 
     def stream_gcode(self):
         """ Stream gcode one line at a time once an ack signal is
@@ -79,7 +80,7 @@ class Streamer():
                 
                 while len(self.lineOfData) == 0:
                     self.lineOfData = str(self.serialPort.readline().decode())
-                print("Data: ",self.lineOfData)
+                # print("Data: ",self.lineOfData)
                 while self.lineOfData[-1]!="$":
                     try:
                         self.lineOfData = str(self.serialPort.readline().decode())

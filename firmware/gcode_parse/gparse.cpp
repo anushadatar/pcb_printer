@@ -158,6 +158,7 @@ void GParse::DrawLine(float newx, float newy){
                 over -= dx_;
                 stepperY_->move(diry_);
             }
+            delayMicroseconds(3000);
         }
     }
     else { 
@@ -169,6 +170,7 @@ void GParse::DrawLine(float newx, float newy){
                 over -= dy_;
                 stepperX_->move(dirx_);
             }
+            delayMicroseconds(3000);
         }
     }
 
