@@ -16,10 +16,10 @@ class Formatter():
         """ Initate the class with the path to source gcode and the output gcode 
         """
         self.readpath = readpath
-        self.savepath = savepath
+        self.savepath = "output.gcode"
         self.formatted_b = False
         self.formatted = []
-        self.thread = 60/127
+        self.thread = 12 #60/127 is for mm, since flatcam defaults to inch, we should probably use inch here
         self.step = 200
         self.microstep = 8
         self.coefficient = self.thread * self.step * self.microstep

@@ -31,7 +31,7 @@ class Streamer():
         self.initialized = True
         self.opts = opts
         self.args = args
-        self.lineOfData = 0
+        self.lineOfData = "$"
 
     def config_serial(self, baudrate=115520):
         """ Set up the serial port to communicate with Arduino
@@ -42,7 +42,7 @@ class Streamer():
             self.baudRate = baudrate
             # open serial port
             self.serialPort = serial.Serial(self.arduinoComPort, self.baudRate, timeout=1)
-            print('Serial Port ttyACM0')
+            print('Serial Port ttyACM0\n')
         except:
             self.arduinoComPort = "/dev/ttyACM1"
             # set baud rate
@@ -51,9 +51,12 @@ class Streamer():
             self.serialPort = serial.Serial(self.arduinoComPort,self.baudRate, timeout=1)
             print('Serial Port ttyACM1\n')
 
+        time.sleep(5)
         # Allow arduino to stay in relative mode unless we are streaming a gcode file
         if self.opts.stream:
-            self.serialPort.write(" G90".encode())
+            self.serialPort.write(" G90\n".encode())
+            print("------------Stream Mode------------")
+
 
     def open_gcode(self):
         """ Open the gcode file
@@ -70,12 +73,23 @@ class Streamer():
         """
         if self.opts.stream:
             for each_line in self.gcodecontent:
+                print(each_line)
                 self.serialPort.write(each_line.encode())
-                while self.lineOfData!='$':
+                self.lineOfData = str(self.serialPort.readline().decode())
+                
+                while len(self.lineOfData) == 0:
+                    self.lineOfData = str(self.serialPort.readline().decode())
+                print("Data: ",self.lineOfData)
+                while self.lineOfData[-1]!="$":
                     try:
-                        self.lineOfData = self.serialPort.readline().decode()
+                        self.lineOfData = str(self.serialPort.readline().decode())
+                        # print(self.lineOfData, end=" ")
+                        # print("length of the message", len(self.lineOfData))
+                        if(len(self.lineOfData)==0):
+                            break
                     except:
                         print("bad serial format")
+
                 print("movement successful!")
         
     def direction(self):

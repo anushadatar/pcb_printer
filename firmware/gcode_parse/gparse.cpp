@@ -30,11 +30,11 @@ void GParse::Initialize(){
 
 void GParse::Help(){
     // Includes commands for supported G-Code Commands
-    Serial.println(F("Commands:"));
-    Serial.println(F("G00 [X(steps)] [Y(steps)] [F(feedrate)]; - Fast linear move"));
-    Serial.println(F("G01 [X(steps)] [Y(steps)] [F(feedrate)]; - linear move"));
-    Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
-    Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
+    // Serial.println(F("Commands:"));
+    // Serial.println(F("G00 [X(steps)] [Y(steps)] [F(feedrate)]; - Fast linear move"));
+    // Serial.println(F("G01 [X(steps)] [Y(steps)] [F(feedrate)]; - linear move"));
+    // Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
+    // Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
 }
 
 void GParse::Listening(){
@@ -42,19 +42,19 @@ void GParse::Listening(){
         char c = Serial.read();
         buffer[i_++] = c;
         if(c=='\n') {
-            Serial.print(F("$")); 
             buffer[i_]=(char)0;
             Processing();
             Reseti();
+            Serial.print(F("$")); 
         }
     }
 }
 
 void GParse::Processing(){
-    Serial.println(buffer);
-    Serial.print("i ");Serial.println(i_);
+    // Serial.println(buffer);
+    // Serial.print("i ");Serial.println(i_);
     int cmd=(int)ParseNum('G',-1);
-    Serial.print("cmd ");Serial.println(cmd);
+    // Serial.print("cmd ");Serial.println(cmd);
     switch(cmd){
         // Linear motion.
         case 0: 
@@ -93,6 +93,27 @@ void GParse::Processing(){
         case 91: modeAbs_=0; break; 
         default: break;
     }
+
+    cmd=(int)ParseNum('M',-1);
+    Serial.print("M cmd ");Serial.println(cmd);
+    switch(cmd){
+        case 2: 
+        {
+            float cx = ParseNum('I', (modeAbs_?px_:0)) + (modeAbs_?0:px_);
+            float cy = ParseNum('J', (modeAbs_?py_:0)) + (modeAbs_?0:py_);
+            float x =  ParseNum('X', (modeAbs_?px_:0)) + (modeAbs_?0:px_);
+            float y =  ParseNum('Y', (modeAbs_?py_:0)) + (modeAbs_?0:py_);
+            DrawArc(cx, cy, x, y, 1); 
+            break;
+        }
+        // Move in a counter-clockwise arc.
+        case 3:
+            // Enable the spindle here
+            break;
+        case 5:
+            // Disable the spindle here
+        default: break;
+    }
 }
 
 float GParse::ParseNum(char code,float val) {
@@ -116,14 +137,14 @@ void GParse::DrawLine(float newx, float newy){
     // Calculate and print distances based on directionality.
     dx_ = newx - px_;
     dy_ = newy - py_;
-    Serial.print("dx "); Serial.println(dx_); 
-    Serial.print("dy "); Serial.println(dy_);
+    // Serial.print("dx "); Serial.println(dx_); 
+    // Serial.print("dy "); Serial.println(dy_);
     dirx_ = (dx_>0) ? 1:-1;
     diry_ = (dy_>0) ? 1:-1;
     dx_ = abs(dx_);
     dy_ = abs(dy_);
-    Serial.print("dx "); Serial.print(dx_); Serial.print("; dirx "); Serial.println(dirx_);
-    Serial.print("dy "); Serial.print(dy_); Serial.print("; diry "); Serial.println(diry_);
+    // Serial.print("dx "); Serial.print(dx_); Serial.print("; dirx "); Serial.println(dirx_);
+    // Serial.print("dy "); Serial.print(dy_); Serial.print("; diry "); Serial.println(diry_);
     
     // Step for as long as necessary to move specified distance.
     unsigned long counts;
@@ -154,6 +175,7 @@ void GParse::DrawLine(float newx, float newy){
     px_ = newx;
     py_ = newy;
 }
+
 float GParse::atangent(float dy,float dx) {
     // Calculate arctangent and adjust for signs.
     float a = atan2(dy,dx);
@@ -180,7 +202,7 @@ void GParse::DrawArc(float cx,float cy,float x,float y,float dir) {
 
     int i;
     int num_segments = (int)round(len / SEGMENT_LENGTH);
-    Serial.println("Number of Segments: "); Serial.print(num_segments);
+    // Serial.println("Number of Segments: "); Serial.print(num_segments);
     // Variables associated with the arc loop.
     float nx, ny, nz, angle3, fraction;
     for(i=0;i<num_segments;++i) {
