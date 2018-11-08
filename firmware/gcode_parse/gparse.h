@@ -1,26 +1,86 @@
 #ifndef GPARSE_H
 #include <Arduino.h>
 #include "A4988.h"
-// #include "BasicStepperDriver.h"
 
-class GParse// : private Fsm
+/*
+G-Code parser object that takes in G-Code file lines individually and converts them into motor movements.
+*/
+
+class GParse
 {
+    /*
+    Outward-facing variables and methods for use over softare abstraction layers.
+    */
     public:
-    GParse(const unsigned long baud, BasicStepperDriver* X, BasicStepperDriver* Y, uint8_t rpm, uint8_t microstep) :
-        baud_(baud), stepperX_(X), stepperY_(Y), rpm_{rpm}, microstep_{microstep} {}
+        /*
+        Constructor - requires inputs detailed more heavily in private fields. One instance of the parser listens over serial
+        for G-Code commands, parses them, and converts them to concrete motor movements.
+        */
+        GParse(const unsigned long baud, BasicStepperDriver* X, BasicStepperDriver* Y, uint8_t rpm, uint8_t microstep) :
+            baud_(baud), stepperX_(X), stepperY_(Y), rpm_{rpm}, microstep_{microstep} {}
 
+        /*
+        Kicks off serial monitor at specified baud rate, enables microstepping mode, and runs sanity check on gantry.
+        
+        Sanity check involves moving each stepper motor one rotation (assuming microstepping). Note that if the gantry has 
+        run into one of the edges of the frame, manually reset it or this sanity check may cause mechanical failures.
+        
+        # TODO Could be nice to make the sanity check disable-able, or just have good limit switch things.
+        */
         void Initialize();
+    
+        /*
+        Waits over Serial for G-Code commands, and then implements them as needed.
+        */
         void Listening();
+        
+        /*
+        Systematically parses each individual G-Code command as they are heard over Serial.
+        */
         void Processing();
 
+        /*
+        Prints G-Code syntax for each possible command for user.
+        */
         void Help();
-        float ParseNum(char code, float val);
-        void Reseti();
-        void DrawLine(float newx, float newy);
-        void DrawArc(float cx,float cy,float x,float y,float dir);
-        float atangent(float dy,float dx);
-        void SetPosition(float newx, float newy);
+    
+        /*
+        Utility menthod to find number values associated with the specified code.
         
+        CHAR code is the individual flag to search for when looking for the following float.
+        FLOAT val is the floating-point value associated with the original code. 
+        
+        RETURNS FLOAT value of flagged character.
+        */
+        float ParseNum(char code, float val);
+    
+        /*
+        Literally resets character counter. 
+        */
+        void Reseti();
+        
+        /*
+        Draws straight line from existing point to given x and y coordinates.
+        FLOAT newx is x-destination for gantry.
+        FLOAT newy is y-destination for gantry.
+        */
+        void DrawLine(float newx, float newy);
+    
+        /*
+        Draws arc from existing point along given radius to given point in given direction.
+        FLOAT cx is the x component of the circle's center.
+        FLOAT cy is the y component of the circle's center.
+        FLOAT x is the x component of the radius.
+        FLOAT y is the y component of the radius.
+        FLOAT dir is the direction of the circle. #TODO Double check. 
+            1 is clockwise, -1 is counter-clockwise.
+        */
+        void DrawArc(float cx,float cy,float x,float y,float dir);
+    
+        /*
+        Utility method for calculating sign-adjusted inverse tangent of some number.
+        */
+        float atangent(float dy,float dx);        
 
     private:
         // const uint8_t max_length;
