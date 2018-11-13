@@ -80,7 +80,12 @@ class GParse
         /*
         Utility method for calculating sign-adjusted inverse tangent of some number.
         */
-        float atangent(float dy,float dx);        
+        float atangent(float dy,float dx);     
+
+        /*
+        Limit Switch triggered error
+        */
+        void limitSwitchError();     
 
     private:
         // const uint8_t max_length;

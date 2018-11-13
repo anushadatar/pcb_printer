@@ -219,5 +219,9 @@ void GParse::DrawArc(float cx,float cy,float x,float y,float dir) {
     }
 }
 
-void serialEvent(){
+void GParse::limitSwitchError(){
+    while(1){
+        Serial.println("One of the limit switches is triggered.");
+        delay(5000);
+    }
 }
