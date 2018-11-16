@@ -19,9 +19,9 @@ def process_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--filename', action="store", dest='filename',
                     help="Filename of the gerber or svg file.")
-    parser.add_argument('--tool-diameter', action="store", dest='tool-dia', 
+    parser.add_argument('--tool-diameter', action="store", dest='tool_diameter', 
                     help="Tool diameter associated with cut.")
-
+    
     args = parser.parse_args() 
     print(args)
     return args
@@ -32,15 +32,15 @@ def create_shellfile(filename, tool_diameter):
     """
     tcl_file = open("create_gcode.tcl", "w")
     # Flatcam currently supports both gcode files and svg files. 
-    if (filename[filename.length-4 : filename.length-1] == 'svg'):
-       
-    elif (filename[filename.length-4 : filename.length-1] == 'gbr'):
-        
+    if (filename[len(filename)-3 : len(filename)] == "svg"):
+        tcl_file.write("test \n asdjas")   
+    elif (filename[len(filename)-3 : len(filename)] == "gbr"):
+        tcl_file.write("a different test. \n asdsadas.")
     else:
         print("Filetype not supported.")
+    tcl_file.close()
 
-if '__name__' == '__main__':
-    args = process_args()
-    create_shellfile(args.filename, args.tool_diameter)
-
-process_args()
+args = process_args()
+print(args.filename)
+create_shellfile(args.filename, args.tool_diameter)
+print("Done") 
