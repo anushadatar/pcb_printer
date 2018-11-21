@@ -9,7 +9,7 @@
     });
 
 $('#recipeCarousel').carousel({
-  interval: 5000
+  interval: 1000000
 })
 
 $('.portfolio .carousel .carousel-item').each(function(){
