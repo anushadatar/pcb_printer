@@ -17,8 +17,8 @@ def process_args():
     """
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--filename', action="store", dest='filename',
-                    help="Filename of the gerber or svg file.")
+    parser.add_argument('--file', action="store", dest='filename',
+                    help="ABSOLUTE filepath of the gerber or svg file.")
     parser.add_argument('--tool-diameter', action="store", dest='tool_diameter', 
                     help="Tool diameter associated with cut.")
     
@@ -26,19 +26,40 @@ def process_args():
     print(args)
     return args
 
-def create_shellfile(filename, tool_diameter):
+
+def create_shellfile(filename, tool_diameter):                                  
     """
     Creates tcl script based on input args.
+    Requires filename and tool diameter and outputs appropriate gccode file
+    given specified routing parameters.
+    
+    Naming intentionally kept generic to facilitate job-to-job file 
+    maintenance across system.
+
+    filename = PATH to file containing either GBR or SVG file.
+    tool_diameter = The diameter of the given cutting tool, IN INCHES.
+    
+    output from function -> tcl file naamed "create_gcode.tcl"
+    output when ran in flatcam -> gcode file named "current_job.gcode"
     """
-    tcl_file = open("create_gcode.tcl", "w")
-    # Flatcam currently supports both gcode files and svg files. 
-    if (filename[len(filename)-3 : len(filename)] == "svg"):
-        tcl_file.write("test \n asdjas")   
-    elif (filename[len(filename)-3 : len(filename)] == "gbr"):
-        tcl_file.write("a different test. \n asdsadas.")
-    else:
+    # Keep naming generic for consistency.                                            
+    tcl_file = open("create_gcode.tcl", "w")                                    
+    #                                                                          
+    name = filename[(filename.rfind("/") + 1): len(filename)]                   
+    # Flatcam currently supports both gcode files and svg files.                
+    if (filename[len(filename)-3 : len(filename)] == "svg"):                    
+        tcl_file.write("Not yet supported") 
+        print("Not yet supported.")                                       
+    elif (filename[len(filename)-3 : len(filename)] == "gbr"):                  
+        tcl_file.write("open_gerber " + filename + "\n")                        
+        tcl_file.write("isolate " + name + " -dia " + tool_diameter + " -outname geometry.gbr_iso -combine\n")
+    else:                                                                       
         print("Filetype not supported.")
-    tcl_file.close()
+    tcl_file.write("cncjob geometry.gbr_iso -tooldia " + tool_diameter + " -outname cnc.gbr_iso_cnc\n")
+    tcl_file.write("write_gcode cnc.gbr_iso_cnc ../pcb_printer/software/current_job.gcode")
+                                                                                
+    tcl_file.close()  
+
 
 args = process_args()
 print(args.filename)
