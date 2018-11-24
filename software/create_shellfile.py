@@ -44,7 +44,6 @@ def create_shellfile(filename, tool_diameter):
     """
     # Keep naming generic for consistency.                                            
     tcl_file = open("create_gcode.tcl", "w")                                    
-    #                                                                          
     name = filename[(filename.rfind("/") + 1): len(filename)]                   
     # Flatcam currently supports both gcode files and svg files.                
     if (filename[len(filename)-3 : len(filename)] == "svg"):
@@ -62,8 +61,6 @@ def create_shellfile(filename, tool_diameter):
                                                                                 
     tcl_file.close()  
 
-
 args = process_args()
 print(args.filename)
 create_shellfile(args.filename, args.tool_diameter)
-print("Done") 
