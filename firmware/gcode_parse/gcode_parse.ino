@@ -7,9 +7,9 @@
 // #define DIR 8
 // #define STEP 9
 #define ENABLE 13 // optional (just delete ENABLE from everywhere if not used)
-#define MS1 10
+#define MS1 12
 #define MS2 11
-#define MS3 12
+#define MS3 10
 
 const uint8_t DIRX_pin = 8;
 const uint8_t STEPX_pin = 9;
@@ -20,7 +20,7 @@ A4988 stepperX(MOTOR_STEPS, DIRX_pin, STEPX_pin, ENABLE, MS1, MS2, MS3);
 A4988 stepperY(MOTOR_STEPS, DIRY_pin, STEPY_pin, ENABLE, MS1, MS2, MS3);
 // BasicStepperDriver stepperX(MOTOR_STEPS, DIRX_pin, STEPX_pin);
 // BasicStepperDriver stepperY(MOTOR_STEPS, DIRY_pin, STEPY_pin);
-GParse parser(250000, &stepperX, &stepperY, RPM, MICROSTEPS);
+GParse parser(115200, &stepperX, &stepperY, RPM, MICROSTEPS);
 
 typedef enum{
   Etching,

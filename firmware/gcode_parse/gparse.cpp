@@ -7,6 +7,9 @@ void GParse::Initialize(){
     // Kick off Serial monitor and print help message.
     Serial.begin(baud_);
     Help();
+    
+    stepperX_->enable();
+    stepperY_->enable();
 
     // Kick of stepper motors and microstepping mode.
     stepperX_->begin(rpm_);
@@ -24,34 +27,36 @@ void GParse::Initialize(){
     // In 1:8 microstepping mode, one revolution takes 8 times as many microsteps
     stepperY_->move(8 * 360);    // forward revolution
     stepperY_->move(-8 * 360);   // reverse revolution
-    
+
+    stepperX_->disable();
+    stepperY_->disable();
     Reseti();
 }
 
 void GParse::Help(){
     // Includes commands for supported G-Code Commands
-    // Serial.println(F("Commands:"));
-    // Serial.println(F("G00 [X(steps)] [Y(steps)] [F(feedrate)]; - Fast linear move"));
-    // Serial.println(F("G01 [X(steps)] [Y(steps)] [F(feedrate)]; - linear move"));
-    // Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
-    // Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
+     Serial.println(F("Commands:"));
+     Serial.println(F("G00 [X(steps)] [Y(steps)] [F(feedrate)]; - Fast linear move"));
+     Serial.println(F("G01 [X(steps)] [Y(steps)] [F(feedrate)]; - linear move"));
+     Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
+     Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
 }
 
 void GParse::Listening(){
     if(Serial.available()){
         char c = Serial.read();
         buffer[i_++] = c;
-        if(c=='\n') {
+        if(c=='$') {
             buffer[i_]=(char)0;
             Processing();
             Reseti();
-            Serial.print(F("$")); 
+            Serial.print(F("\n")); 
         }
     }
 }
 
 void GParse::Processing(){
-    // Serial.println(buffer);
+     Serial.println(buffer);
     // Serial.print("i ");Serial.println(i_);
     int cmd=(int)ParseNum('G',-1);
     // Serial.print("cmd ");Serial.println(cmd);
