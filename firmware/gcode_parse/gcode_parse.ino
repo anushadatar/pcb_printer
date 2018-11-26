@@ -18,26 +18,43 @@ const uint8_t STEPY_pin = 4;
 
 A4988 stepperX(MOTOR_STEPS, DIRX_pin, STEPX_pin, ENABLE, MS1, MS2, MS3);
 A4988 stepperY(MOTOR_STEPS, DIRY_pin, STEPY_pin, ENABLE, MS1, MS2, MS3);
-// BasicStepperDriver stepperX(MOTOR_STEPS, DIRX_pin, STEPX_pin);
-// BasicStepperDriver stepperY(MOTOR_STEPS, DIRY_pin, STEPY_pin);
 GParse parser(115200, &stepperX, &stepperY, RPM, MICROSTEPS);
 
 typedef enum{
+  Idle_Entry,
+  Idle,
+  Idle_Exit,
   Etching,
   LimitError,
 } State;
 
-State state=Etching;
+State state=Idle_Entry;
 void setup() {
   // put your setup code here, to run once:
   parser.Initialize();
   attachInterrupt(digitalPinToInterrupt(2), offlimit, RISING);
+  parser.motorsDisable();
+  state = Idle;
+  parser.Help();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   switch(state)
   {
+    case Idle_Entry:
+      parser.Initialize();
+      attachInterrupt(digitalPinToInterrupt(2), offlimit, RISING);
+      parser.motorsDisable();
+      state = Idle;
+      break;
+    case Idle:
+      break;
+    case Idle_Exit:
+      parser.motorsEnable();
+      Serial.write("?");
+      state = Etching;
+      break;
     case Etching:
       parser.Listening();
       break;
@@ -50,5 +67,31 @@ void loop() {
 }
 
 void offlimit(){
+  parser.motorsDisable();
   state = LimitError;
+}
+
+void serialEvent() {
+  switch(state){
+    case Etching:
+      return;
+      break;
+    case Idle_Entry:
+      return;
+      break;
+    case Idle:
+      if(Serial.available()) {
+        char temp;
+        temp = Serial.read();
+        Serial.println(temp);
+        if(temp=='!') {
+          state=Idle_Exit;
+        }
+      }
+      break;
+    default:
+      return;
+      break;
+  }
+  return;
 }

@@ -85,8 +85,19 @@ class GParse
         /*
         Limit Switch triggered error
         */
-        void limitSwitchError();     
+        void limitSwitchError(); 
 
+        /*
+        Enable the stepper and DC motors
+        */
+        void motorsEnable(); 
+
+        /*
+        Disable the stepper and DC motors
+        */
+        void motorsDisable();     
+
+        
     private:
         // const uint8_t max_length;
         const unsigned long baud_;
@@ -103,6 +114,7 @@ class GParse
         int8_t dirx_, diry_;
         float dx_, dy_;
         uint8_t modeAbs_=0;
+        uint8_t motorEn=0x0;
 };
 
 

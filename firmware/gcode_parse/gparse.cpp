@@ -6,7 +6,6 @@ const float SEGMENT_LENGTH = 100;
 void GParse::Initialize(){
     // Kick off Serial monitor and print help message.
     Serial.begin(baud_);
-    Help();
     
     stepperX_->enable();
     stepperY_->enable();
@@ -229,4 +228,19 @@ void GParse::limitSwitchError(){
         Serial.println("One of the limit switches is triggered.");
         delay(5000);
     }
+}
+
+
+void GParse::motorsEnable(){
+    if(motorEn) return;
+    motorEn = 0x1;
+    stepperX_->enable();
+    stepperY_->enable();
+}
+
+void GParse::motorsDisable(){
+    if(!motorEn) return;
+    motorEn = 0x0;
+    stepperX_->disable();
+    stepperY_->disable();
 }
