@@ -30,7 +30,7 @@ sudo make install
 Download the newest stable source .tar.gz file from [here](https://www.riverbankcomputing.com/software/sip/download). Untar it using
 `tar -xvf [folderName] `. 
 
-Then, install the package with the following commands. 
+Then, install the package with the following commands. If this fails, try moving on to the next step - it may be resolved by the Flatcam setup_ubuntu shell script.
 ~~~~~
 cd [folderName]
 python3 configure.py 
