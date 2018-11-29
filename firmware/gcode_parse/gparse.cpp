@@ -20,7 +20,7 @@ void GParse::Initialize(){
     stepperZ_->enable();
     stepperX_->setMicrostep(8);   // Set microstep mode to 1:8
     stepperY_->setMicrostep(8);   // Set microstep mode to 1:8
-    stepperZ_->setMicrostep(4);
+    stepperZ_->setMicrostep(8);
     // In 1:8 microstepping mode, one revolution takes 8 times as many microsteps
         
 
@@ -40,11 +40,11 @@ void GParse::Initialize(){
 
 void GParse::Help(){
     // Includes commands for supported G-Code Commands
-     Serial.println(F("Commands:"));
-     Serial.println(F("G00 [X(steps)] [Y(steps)] [F(feedrate)]; - Fast linear move"));
-     Serial.println(F("G01 [X(steps)] [Y(steps)] [F(feedrate)]; - linear move"));
-     Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
-     Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
+    //  Serial.println(F("Commands:"));
+    //  Serial.println(F("G00 [X(steps)] [Y(steps)] [F(feedrate)]; - Fast linear move"));
+    //  Serial.println(F("G01 [X(steps)] [Y(steps)] [F(feedrate)]; - linear move"));
+    //  Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
+    //  Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
 }
 
 void GParse::Listening(){
@@ -73,7 +73,7 @@ void GParse::Processing(){
             int temp = ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_);
             DrawLine( temp,
                       ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
-            z_value = ParseNum('Z', (modeAbs_?pz_:0));
+            int z_value = ParseNum('Z', (modeAbs_?pz_:0));
             if (z_value != -1) {
                 stepperZ_->move((int)(z_value));
             }
