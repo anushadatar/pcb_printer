@@ -130,6 +130,7 @@ class GParse
         char buffer[64];
         float px_=0;
         float py_=0;
+        float pz_=0;
         int8_t dirx_, diry_;
         float dx_, dy_;
         uint8_t modeAbs_=0;
