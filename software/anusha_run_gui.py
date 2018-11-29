@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import subprocess
 import tkinter
 import tkinter.simpledialog
 
@@ -16,7 +17,7 @@ def usb_etch_run_script():
     
     # TODO Write code to query USB devices for path or set up auto-mount
            # and write instructions for it accordingly.
-    script_string = "./anusha_run.sh " + path + str(ENGRAVING_DIAMETER)
+    script_string = "./home/anusha/pcb_printer/software/anusha_run.sh " + path + str(ENGRAVING_DIAMETER)
 
     # Call the script.
     subprocess.call(script_string)
@@ -28,10 +29,9 @@ def path_run_script():
     """
     print("Path script called from GUI.")
     path = tkinter.simpledialog.askstring("Title", "Prompt")
-    script_string = "./anusha_run.sh " + path + str(ENGRAVING_DIAMETER)
+    script_string = ["/home/anusha/pcb_printer/software/anusha_run.sh", path, str(ENGRAVING_DIAMETER)]
     # Call the script.
     subprocess.call(script_string) 
-
 
 
 gui = tkinter.Tk()
