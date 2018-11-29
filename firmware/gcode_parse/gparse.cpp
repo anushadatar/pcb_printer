@@ -61,7 +61,7 @@ void GParse::Listening(){
 }
 
 void GParse::Processing(){
-     Serial.println(buffer);
+    //  Serial.println(buffer);
     // Serial.print("i ");Serial.println(i_);
     int cmd=(int)ParseNum('G',-1);
     // Serial.print("cmd ");Serial.println(cmd);
@@ -73,9 +73,11 @@ void GParse::Processing(){
             int temp = ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_);
             DrawLine( temp,
                       ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
-            int z_value = ParseNum('Z', (modeAbs_?pz_:0));
+            int z_value = ParseNum('Z', (modeAbs_?pz_:0)) + (modeAbs_?0:pz_);
             if (z_value != -1) {
-                stepperZ_->move((int)(z_value));
+                stepperZ_->move((int)(pz_ - z_value));
+                pz_ = z_value;
+                Serial.println(pz_);
             }
         break;
         }
