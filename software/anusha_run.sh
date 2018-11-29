@@ -9,7 +9,7 @@ python3 create_shellfile.py --file $1 --tool-diameter $2
 python2 ../../FlatCAM-8.5/FlatCAM.py --shellfile=/home/anusha/pcb_printer/software/create_gcode.tcl
 
 # Format the gcode to be more compatible with the parser.
-python gcode_format.py -p current_job.gcode
+python3 gcode_format.py -p current_job.gcode
 
 # Stream the gcode to the arduino.
-python gcode_stream.py -s -p output.gcode
+python3 gcode_stream.py -s -p output.gcode

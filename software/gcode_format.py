@@ -79,7 +79,8 @@ class Formatter():
         return each[:start_pos+1] + str(num) + " " + each[end_pos:]
 
     def store(self):
-        """ Store the list of formatted gcode to the output path
+        """ 
+        Store the list of formatted gcode to the output path
         """
         if(self.formatted_b):
             with open(self.savepath, 'w+') as f:
