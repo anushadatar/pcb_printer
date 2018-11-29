@@ -1,6 +1,16 @@
 #ifndef GPARSE_H
 #include <Arduino.h>
 #include "A4988.h"
+#include <Encoder.h>
+
+typedef enum{
+  Idle_Entry,
+  Idle,
+  Idle_Exit,
+  Etching,
+  LimitError,
+} State;
+
 
 /*
 G-Code parser object that takes in G-Code file lines individually and converts them into motor movements.
@@ -16,8 +26,8 @@ class GParse
         Constructor - requires inputs detailed more heavily in private fields. One instance of the parser listens over serial
         for G-Code commands, parses them, and converts them to concrete motor movements.
         */
-        GParse(const unsigned long baud, BasicStepperDriver* X, BasicStepperDriver* Y, uint8_t rpm, uint8_t microstep) :
-            baud_(baud), stepperX_(X), stepperY_(Y), rpm_{rpm}, microstep_{microstep} {}
+        GParse(const unsigned long baud, A4988* X, A4988* Y, A4988* Z, Encoder* Decoder, uint8_t rpm, uint8_t microstep) :
+            baud_(baud), stepperX_(X), stepperY_(Y), stepperZ_(Z), decoder_(Decoder), rpm_(rpm), microstep_(microstep) {}
 
         /*
         Kicks off serial monitor at specified baud rate, enables microstepping mode, and runs sanity check on gantry.
@@ -97,12 +107,21 @@ class GParse
         */
         void motorsDisable();     
 
-        
+        /*
+        Adjust Z axis stepper motor
+        */
+        void adjustZ();
+
     private:
         // const uint8_t max_length;
         const unsigned long baud_;
         A4988* stepperX_;
         A4988* stepperY_;
+        A4988* stepperZ_;
+        Encoder* decoder_; 
+        long posNow_;
+        long posLast_;
+        bool firstDecode_ = true;
         // BasicStepperDriver* stepperX_;
         // BasicStepperDriver* stepperY_;
         uint8_t rpm_;
@@ -114,7 +133,7 @@ class GParse
         int8_t dirx_, diry_;
         float dx_, dy_;
         uint8_t modeAbs_=0;
-        uint8_t motorEn=0x0;
+        uint8_t motorEn_=0x0;
 };
 
 

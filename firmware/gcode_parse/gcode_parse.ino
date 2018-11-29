@@ -15,24 +15,22 @@ const uint8_t DIRX_pin = 8;
 const uint8_t STEPX_pin = 9;
 const uint8_t DIRY_pin = 3;
 const uint8_t STEPY_pin = 4;
+const uint8_t DIRZ_pin = 6;
+const uint8_t STEPZ_pin = 7;
 
 A4988 stepperX(MOTOR_STEPS, DIRX_pin, STEPX_pin, ENABLE, MS1, MS2, MS3);
 A4988 stepperY(MOTOR_STEPS, DIRY_pin, STEPY_pin, ENABLE, MS1, MS2, MS3);
-GParse parser(115200, &stepperX, &stepperY, RPM, MICROSTEPS);
+A4988 stepperZ(MOTOR_STEPS, DIRZ_pin, STEPZ_pin, ENABLE, MS1, MS2, MS3);
+Encoder myEnc(2, A4);
 
-typedef enum{
-  Idle_Entry,
-  Idle,
-  Idle_Exit,
-  Etching,
-  LimitError,
-} State;
+GParse parser(115200, &stepperX, &stepperY, &stepperZ, &myEnc, RPM, MICROSTEPS);
 
 State state=Idle_Entry;
+
 void setup() {
   // put your setup code here, to run once:
   parser.Initialize();
-  attachInterrupt(digitalPinToInterrupt(2), offlimit, RISING);
+  // attachInterrupt(digitalPinToInterrupt(2), offlimit, RISING);
   parser.motorsDisable();
   state = Idle;
   parser.Help();
@@ -49,6 +47,7 @@ void loop() {
       state = Idle;
       break;
     case Idle:
+      parser.adjustZ();
       break;
     case Idle_Exit:
       parser.motorsEnable();

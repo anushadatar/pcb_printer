@@ -7,28 +7,34 @@ void GParse::Initialize(){
     // Kick off Serial monitor and print help message.
     Serial.begin(baud_);
     
-    stepperX_->enable();
-    stepperY_->enable();
+    // stepperX_->enable();
+    // stepperY_->enable();
+    // stepperZ_->enable();
 
     // Kick of stepper motors and microstepping mode.
     stepperX_->begin(rpm_);
     stepperX_->enable();
     stepperY_->begin(rpm_);
     stepperY_->enable();
+    stepperZ_->begin(rpm_);
+    stepperZ_->enable();
     stepperX_->setMicrostep(8);   // Set microstep mode to 1:8
     stepperY_->setMicrostep(8);   // Set microstep mode to 1:8
+    stepperZ_->setMicrostep(4);
     // In 1:8 microstepping mode, one revolution takes 8 times as many microsteps
         
 
-    // Sanity check by moving each stepper motor.
-    stepperX_->move(8 * 360);    // forward revolution
-    stepperX_->move(-8 * 360);   // reverse revolution
-    // In 1:8 microstepping mode, one revolution takes 8 times as many microsteps
-    stepperY_->move(8 * 360);    // forward revolution
-    stepperY_->move(-8 * 360);   // reverse revolution
+    // // Sanity check by moving each stepper motor.
+    // stepperX_->move(8 * 360);    // forward revolution
+    // stepperX_->move(-8 * 360);   // reverse revolution
+    // // In 1:8 microstepping mode, one revolution takes 8 times as many microsteps
+    // stepperY_->move(8 * 360);    // forward revolution
+    // stepperY_->move(-8 * 360);   // reverse revolution
 
-    stepperX_->disable();
-    stepperY_->disable();
+    // stepperX_->disable();
+    // stepperY_->disable();
+    // stepperZ_->disable();
+    motorEn_ = 0x0;
     Reseti();
 }
 
@@ -232,15 +238,34 @@ void GParse::limitSwitchError(){
 
 
 void GParse::motorsEnable(){
-    if(motorEn) return;
-    motorEn = 0x1;
+    if(motorEn_) return;
+    motorEn_ = 0x1;
     stepperX_->enable();
     stepperY_->enable();
+    stepperZ_->enable();
 }
 
 void GParse::motorsDisable(){
-    if(!motorEn) return;
-    motorEn = 0x0;
+    if(!motorEn_) return;
+    motorEn_ = 0x0;
     stepperX_->disable();
     stepperY_->disable();
+    stepperZ_->disable();
 }
+
+void GParse::adjustZ(){
+    if(firstDecode_) {
+        posNow_ = decoder_->read();
+        posLast_ = decoder_->read();
+        firstDecode_ = false;
+    } else {
+        posNow_ = decoder_->read();
+        if(posNow_!=posLast_){
+            long diff = posNow_-posLast_;
+            stepperZ_->move((int)diff);
+            Serial.println(diff);
+            posLast_ = posNow_;
+        }
+    }
+}
+
