@@ -47,15 +47,16 @@ def create_shellfile(filename, tool_diameter):
     name = filename[(filename.rfind("/") + 1): len(filename)]                   
     # Flatcam currently supports both gcode files and svg files.                
     if (filename[len(filename)-3 : len(filename)] == "svg"):
-        tcl_file.write("import_svg " + filename + "\n")
+        tcl_file.write("import_svg " + filename + " -outname geometry.gbr_iso \n")
     elif (filename[len(filename)-3 : len(filename)] == "gbr"):                  
-        tcl_file.write("open_gerber " + filename + "\n")                        
+        tcl_file.write("open_gerber " + filename + "\n")          
+        tcl_file.write("isolate " + name + " -dia " + tool_diameter + " -outname geometry.gbr_iso -combine\n")
     else:
         print ("Filetype not supported.")
         return None
 
     # General geometry configuration. 
-    tcl_file.write("isolate " + name + " -dia " + tool_diameter + " -outname geometry.gbr_iso -combine\n")
+#    tcl_file.write("isolate " + name + " -dia " + tool_diameter + " -outname geometry.gbr_iso -combine\n")
     tcl_file.write("cncjob geometry.gbr_iso -tooldia " + tool_diameter + " -outname cnc.gbr_iso_cnc\n")
     tcl_file.write("write_gcode cnc.gbr_iso_cnc ../pcb_printer/software/current_job.gcode")
                                                                                 
