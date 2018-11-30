@@ -1,5 +1,15 @@
-python2 ../../FlatCAM-8.5/FlatCAM.py --shellfile=/home/josh/Github/pcb_printer/software/flatcam_scripts/gbr_to_gcode.tcl
+### Script to automate mill operation.
+# Argument 1 should be file path.
+# Argument 2 should be tool diameter (in inches). 
 
-python gcode_format.py -p test_data/rectangle/test.gcode
+# Crete an appropriate tcl file for the given constraints.
+python3 create_shellfile.py --file $1 --tool-diameter $2 
 
-python gcode_stream.py -s -p output.gcode
+# Run the Flatcam software to create the gcode file.
+python2 ../../FlatCAM-8.5/FlatCAM.py --shellfile=/home/josh/pcb_printer/software/create_gcode.tcl
+
+# Format the gcode to be more compatible with the parser.
+python3 gcode_format.py -p current_job.gcode
+
+# Stream the gcode to the arduino.
+python3 gcode_stream.py -s -p output.gcode
