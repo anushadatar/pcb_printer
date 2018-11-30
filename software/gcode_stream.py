@@ -33,7 +33,7 @@ class Streamer():
         self.args = args
         self.lineOfData = "$"
 
-    def config_serial(self, baudrate=250000):
+    def config_serial(self, baudrate=115200):
         """ Set up the serial port to communicate with Arduino
         """
         try: # Try either ttyACM0 or ttyACM1 because Arduino switches around between these two
@@ -44,19 +44,22 @@ class Streamer():
             self.serialPort = serial.Serial(self.arduinoComPort, self.baudRate, timeout=1)
             print('Serial Port ttyACM0\n')
         except:
-            self.arduinoComPort = "/dev/ttyACM1"
+            self.arduinoComPort = "/dev/ttyUSB0"
             # set baud rate
             self.baudRate = baudrate
             # open serial port
             self.serialPort = serial.Serial(self.arduinoComPort,self.baudRate, timeout=1)
             print('Serial Port ttyACM1\n')
 
+    
         time.sleep(20)
+        self.serialPort.write("!".encode())
+        while (self.serialPort.readline().decode() != "?"):
+            continue
         # Allow arduino to stay in relative mode unless we are streaming a gcode file
         if self.opts.stream:
             self.serialPort.write(" G90\n".encode())
             print("------------Stream Mode------------")
-
 
     def open_gcode(self):
         """ Open the gcode file

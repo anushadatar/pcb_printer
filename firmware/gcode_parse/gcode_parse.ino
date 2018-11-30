@@ -82,7 +82,6 @@ void serialEvent() {
       if(Serial.available()) {
         char temp;
         temp = Serial.read();
-        Serial.println(temp);
         if(temp=='!') {
           state=Idle_Exit;
         }

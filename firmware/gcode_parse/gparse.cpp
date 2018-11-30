@@ -20,7 +20,7 @@ void GParse::Initialize(){
     stepperZ_->enable();
     stepperX_->setMicrostep(8);   // Set microstep mode to 1:8
     stepperY_->setMicrostep(8);   // Set microstep mode to 1:8
-    stepperZ_->setMicrostep(4);
+    stepperZ_->setMicrostep(8);
     // In 1:8 microstepping mode, one revolution takes 8 times as many microsteps
         
 
@@ -40,28 +40,28 @@ void GParse::Initialize(){
 
 void GParse::Help(){
     // Includes commands for supported G-Code Commands
-     Serial.println(F("Commands:"));
-     Serial.println(F("G00 [X(steps)] [Y(steps)] [F(feedrate)]; - Fast linear move"));
-     Serial.println(F("G01 [X(steps)] [Y(steps)] [F(feedrate)]; - linear move"));
-     Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
-     Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
+    //  Serial.println(F("Commands:"));
+    //  Serial.println(F("G00 [X(steps)] [Y(steps)] [F(feedrate)]; - Fast linear move"));
+    //  Serial.println(F("G01 [X(steps)] [Y(steps)] [F(feedrate)]; - linear move"));
+    //  Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
+    //  Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
 }
 
 void GParse::Listening(){
     if(Serial.available()){
         char c = Serial.read();
         buffer[i_++] = c;
-        if(c=='$') {
+        if(c=='\n') {
             buffer[i_]=(char)0;
             Processing();
             Reseti();
-            Serial.print(F("\n")); 
+            Serial.print(F("$")); 
         }
     }
 }
 
 void GParse::Processing(){
-     Serial.println(buffer);
+    //  Serial.println(buffer);
     // Serial.print("i ");Serial.println(i_);
     int cmd=(int)ParseNum('G',-1);
     // Serial.print("cmd ");Serial.println(cmd);
@@ -73,7 +73,13 @@ void GParse::Processing(){
             int temp = ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_);
             DrawLine( temp,
                       ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
-            break;
+            int z_value = ParseNum('Z', (modeAbs_?pz_:0)) + (modeAbs_?0:pz_);
+            if (z_value != -1) {
+                stepperZ_->move((int)(pz_ - z_value));
+                pz_ = z_value;
+                Serial.println(pz_);
+            }
+        break;
         }
         // Move in a clockwise arc.
         case 2: 
@@ -262,8 +268,8 @@ void GParse::adjustZ(){
         posNow_ = decoder_->read();
         if(posNow_!=posLast_){
             long diff = posNow_-posLast_;
-            stepperZ_->move((int)diff);
-            Serial.println(diff);
+            stepperZ_->move((int)diff<<2);
+//            Serial.println(diff);
             posLast_ = posNow_;
         }
     }
