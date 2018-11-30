@@ -268,7 +268,7 @@ void GParse::adjustZ(){
         posNow_ = decoder_->read();
         if(posNow_!=posLast_){
             long diff = posNow_-posLast_;
-            stepperZ_->move((int)diff);
+            stepperZ_->move((int)diff<<2);
 //            Serial.println(diff);
             posLast_ = posNow_;
         }
