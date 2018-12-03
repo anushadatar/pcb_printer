@@ -86,7 +86,7 @@ nav {z-index: 999;transition: all 0.3s;}
     transition: all .3s ease-in-out;
 }
 .sticky {
-    background: #2cbf84;
+    background: ##544f4f;
     padding: 15px 0;
 }
 .top-container {
@@ -215,7 +215,7 @@ header .btn-primary:hover {
 .about .heading h3 {font-size: 34px;font-weight: 700;letter-spacing: -1.5px;padding-bottom: 15px;}
 .about .heading h4 {font-size: 16px;font-weight: 500;letter-spacing: 0.5px;padding-bottom: 60px;}
 .about .icon .fa {
-    color: #2cbf84;
+    color: #544f4f;
     font-size: 60px;
     background: #fff;
     width: 100px;
@@ -559,9 +559,9 @@ header .btn-primary:hover {
     border: none;
 }
 .Subscribe .btn-info:not(:disabled):not(.disabled):active {
-    color: #2cbf84;
+    color: #544f4f;
     background-color: transparent;
-    border-color: #2cbf84;
+    border-color: #544f4f;
 }
 .Subscribe input {
     font-size: 12px;
@@ -1278,7 +1278,7 @@ textarea.form-control {
 }
 /*== 768px Media Queries Styles ==*/
 @media screen and (max-width: 768px) {
-    .navbar {padding: .5rem 1rem;background: #2cbf84;}
+    .navbar {padding: .5rem 1rem;background: #544f4f;}
     .navbar-expand-lg .navbar-nav li:after {display: none;}
     .navbar-dark .navbar-nav .active>.nav-link {background:transparent; }
     .navbar-nav .nav-link {padding: .5rem 1rem;}
