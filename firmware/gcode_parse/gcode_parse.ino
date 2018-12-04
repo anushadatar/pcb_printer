@@ -26,6 +26,7 @@ Encoder myEnc(2, A4);
 GParse parser(115200, &stepperX, &stepperY, &stepperZ, &myEnc, RPM, MICROSTEPS);
 
 State state=Idle_Entry;
+AxisState axis=Free;
 
 void setup() {
   // put your setup code here, to run once:
@@ -47,7 +48,8 @@ void loop() {
       state = Idle;
       break;
     case Idle:
-      parser.adjustZ();
+      // parser.adjustZ();
+      parser.jogAxes(axis);
       break;
     case Idle_Exit:
       parser.motorsEnable();
@@ -92,4 +94,42 @@ void serialEvent() {
       break;
   }
   return;
+}
+
+ISR(PCINT1_vect){
+  delay(3);
+  if(PINC&_BV(PC3)){
+    if(axis==Free){
+      axis = X;
+    }else if(axis==X){
+      axis = Y;
+    }else if(axis==Y){
+      axis = Z;
+    }else if(axis==Z){
+      axis = Free;
+    }
+
+    switch(axis){
+      case Free:
+        // Axis State Free
+        PORTC &= ~_BV(PC1) & ~_BV(PC2); //Turn off LED 0 and 1
+        break;
+      case X:
+        // Axis State X
+        PORTC &= ~_BV(PC2); //Turn off LED 0
+        PORTC |= _BV(PC1); //Turn on LED 1
+        break;
+
+      case Y:
+        // Axis State Y
+        PORTC &= ~_BV(PC1); //Turn off LED 1
+        PORTC |= _BV(PC2); //Turn on LED 0
+        break;
+
+      case Z:
+        // Axis State Z
+        PORTC |= _BV(PC1) | _BV(PC2); //Turn on LED 0 and 1
+        break;
+    }
+  }
 }

@@ -3,6 +3,10 @@
 #include "A4988.h"
 #include <Encoder.h>
 
+#define LED0 A1
+#define LED1 A2
+#define AXISCHANGE A3
+
 typedef enum{
   Idle_Entry,
   Idle,
@@ -11,6 +15,12 @@ typedef enum{
   LimitError,
 } State;
 
+typedef enum{
+  Free,
+  X,
+  Y,
+  Z
+} AxisState;
 
 /*
 G-Code parser object that takes in G-Code file lines individually and converts them into motor movements.
@@ -112,6 +122,11 @@ class GParse
         */
         void adjustZ();
 
+        /*
+        Adjust X, Y, Z axis stepper motors manually
+        */
+        void jogAxes(AxisState axis);
+
     private:
         // const uint8_t max_length;
         const unsigned long baud_;
@@ -134,7 +149,6 @@ class GParse
         int8_t dirx_, diry_;
         float dx_, dy_;
         uint8_t modeAbs_=1;
-        uint8_t motorEn_=0x0;
 };
 
 

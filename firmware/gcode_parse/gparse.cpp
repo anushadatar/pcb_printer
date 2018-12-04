@@ -7,9 +7,12 @@ void GParse::Initialize(){
     // Kick off Serial monitor and print help message.
     Serial.begin(baud_);
     
-    // stepperX_->enable();
-    // stepperY_->enable();
-    // stepperZ_->enable();
+    pinMode(AXISCHANGE, INPUT);
+    PCICR |= _BV(PCIE1);
+    PCMSK1 |= _BV(PCINT11);
+    sei();
+    pinMode(LED0, OUTPUT);
+    pinMode(LED1, OUTPUT);
 
     // Kick of stepper motors and microstepping mode.
     stepperX_->begin(rpm_);
@@ -34,7 +37,6 @@ void GParse::Initialize(){
     // stepperX_->disable();
     // stepperY_->disable();
     // stepperZ_->disable();
-    motorEn_ = 0x0;
     Reseti();
 }
 
@@ -71,8 +73,7 @@ void GParse::Processing(){
         case 1: 
         {
             int temp = ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_);
-            DrawLine( temp,
-                      ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
+            DrawLine(temp, ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
             int z_value = ParseNum('Z', (modeAbs_?pz_:0)) + (modeAbs_?0:pz_);
             if (z_value != -1) {
                 stepperZ_->move((int)(pz_ - z_value));
@@ -174,7 +175,7 @@ void GParse::DrawLine(float newx, float newy){
                 over -= dx_;
                 stepperY_->move(diry_);
             }
-            delayMicroseconds(3000);
+            delayMicroseconds(1500);
         }
     }
     else { 
@@ -186,7 +187,7 @@ void GParse::DrawLine(float newx, float newy){
                 over -= dy_;
                 stepperX_->move(dirx_);
             }
-            delayMicroseconds(3000);
+            delayMicroseconds(1500);
         }
     }
 
@@ -244,16 +245,14 @@ void GParse::limitSwitchError(){
 
 
 void GParse::motorsEnable(){
-    if(motorEn_) return;
-    motorEn_ = 0x1;
+    // PORTB |= _BV(PB5);
     stepperX_->enable();
     stepperY_->enable();
     stepperZ_->enable();
 }
 
 void GParse::motorsDisable(){
-    if(!motorEn_) return;
-    motorEn_ = 0x0;
+    // PORTB &= ~_BV(PB5);
     stepperX_->disable();
     stepperY_->disable();
     stepperZ_->disable();
@@ -269,9 +268,50 @@ void GParse::adjustZ(){
         if(posNow_!=posLast_){
             long diff = posNow_-posLast_;
             stepperZ_->move((int)diff<<2);
-//            Serial.println(diff);
             posLast_ = posNow_;
         }
     }
 }
 
+void GParse::jogAxes(AxisState axis){
+    if(firstDecode_) {
+        motorsDisable();
+        posNow_ = decoder_->read();
+        posLast_ = decoder_->read();
+        firstDecode_ = false;
+    } else {
+        switch(axis){
+            case Free:
+                motorsDisable();
+                // firstDecode_ = true;
+                break;
+            case X:
+                motorsEnable();
+                posNow_ = decoder_->read();
+                if(posNow_!=posLast_){
+                    long diff = posNow_-posLast_;
+                    stepperX_->move((int)diff<<4);
+                    posLast_ = posNow_;
+                }
+                break;
+            case Y:
+                motorsEnable();
+                posNow_ = decoder_->read();
+                if(posNow_!=posLast_){
+                    long diff = posNow_-posLast_;
+                    stepperY_->move((int)diff<<4);
+                    posLast_ = posNow_;
+                }
+                break;
+            case Z:
+                motorsEnable();
+                posNow_ = decoder_->read();
+                if(posNow_!=posLast_){
+                    long diff = posNow_-posLast_;
+                    stepperZ_->move((int)diff<<2);
+                    posLast_ = posNow_;
+                }         
+                break;
+        }
+    }
+}
