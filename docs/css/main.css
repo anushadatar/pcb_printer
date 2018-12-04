@@ -86,7 +86,11 @@ nav {z-index: 999;transition: all 0.3s;}
     transition: all .3s ease-in-out;
 }
 .sticky {
+<<<<<<< Updated upstream
     background: ##544f4f;
+=======
+    background: #544f4f;
+>>>>>>> Stashed changes
     padding: 15px 0;
 }
 .top-container {
@@ -148,7 +152,7 @@ header {
     position: relative;
 }
 header .carousel-indicators .active {
-    background-color: #57ba44;
+    background-color: #544f4f;
 }
 header .carousel-caption  {
     position: absolute;
