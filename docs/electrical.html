@@ -57,7 +57,7 @@
           not absolutely addressed so it can be used on the olin server. -->
     <nav id="myHeader" class="header navbar navbar-expand-lg navbar-dark">
       <div class="container">
-        <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
+        <a class="navbar-brand" href="index.html"><img src="images/logo2.jpg" alt="logo" height="80"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -107,6 +107,36 @@
       </div>                                                                    
     </header>  
 
-<p, width="200">The electrical system comprises of two parts: the real time control system and the user interface system. The real time
- control system is based on an Arduino Uno V3. The user interface system is a RasberryPi with a LCDTFT touchscreen. The two 
- systems are connected through a USB capable that allows the two to communicate serially.</p>
+    <p>The electrical system comprises of two parts: the real time control system and the user interface system. The real time
+    control system is based on an Arduino Uno V3. The user interface system is a RasberryPi with a LCDTFT touchscreen. The two 
+    systems are connected through a USB capable that allows the two to communicate serially.</p>
+
+    <h3>User Interface System</h3>
+    TODO TODO TODO
+
+    <h3>Real Time Control System</h3>
+    <p>We choose Arduino as our platform of development since it is the fast option to achieve a viable, albeit limited,
+       performance within the timeline of PoE. Instead of purchasing a pre-designed Arduino shield which would limit the 
+       degree of freedom when writing our firmware. Our MVP solution is a perforated board that easily sits on top of an Arduino 
+       Uno similar to other Arduino shields. We were able to customize our electronics easily and at the same time leave room for 
+       future expansions is needed. Below is the schematic of the whole real time control system.</p>
+    <img src="images/schematic.jpg" alt="logo" height="700">
+    <p>On the main board which sits directly on Arduino, we have three A4988 stepper motor drivers and connections to limit
+    switches and stepper motors are also provided.</p>
+    <img src="images/logo2.jpg" alt="logo" height="80">
+    <p>On the the first extension board sits a couple of LEDs and a quadrature encoder switch. A press down on the quadrature 
+      encoder switch allows the user to cycle through between four modes of zero: Manually(motor drivers disengaged), X, Y, and Z.
+      The quadrature encoder ticks provides information on the distance and the direction the motor should be traveling in.</p>
+      <img src="images/logo2.jpg" alt="logo" height="80">
+    <p>The second extension board has a power relay and a N-channel MOSFET to drive the dremel motor throughout the milling 
+    process. The power relay is separately controlled by Arduino, ensuring the safe physical disconnect from a dangerous cutting 
+    tool from power when it is not enabled.</p>
+    <img src="images/logo2.jpg" alt="logo" height="80">
+    <p>An E-switch can also be seen on the outer housing of the gantry for users to cut off power quickly in case of emergencies.</p>
+
+
+<!-- <center> The electrical system comprises of two parts: the real time control system and the user interface system. The real time
+    control system is based on an Arduino Uno V3. The user interface system is a RasberryPi with a LCDTFT touchscreen. The two 
+    systems are connected through a USB capable that allows the two to communicate serially.</center> -->
+  </body>
+</html>
