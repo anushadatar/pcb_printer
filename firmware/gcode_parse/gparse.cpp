@@ -49,9 +49,12 @@ void GParse::Help(){
     //  Serial.println(F("G02 [X(radius)] [Y(radius)] [I(center x component)] [J(center y component)]; Arcs clockwise"));
 }
 
-void GParse::Listening(){
+void GParse::Listening(State* state){
     if(Serial.available()){
         char c = Serial.read();
+        if(c=='?') {
+          *state=Etching_Exit;
+        }
         buffer[i_++] = c;
         if(c=='\n') {
             buffer[i_]=(char)0;
@@ -290,7 +293,7 @@ void GParse::jogAxes(AxisState axis){
                 posNow_ = decoder_->read();
                 if(posNow_!=posLast_){
                     long diff = posNow_-posLast_;
-                    stepperX_->move((int)diff<<4);
+                    stepperX_->move((int)diff*8);
                     posLast_ = posNow_;
                 }
                 break;
@@ -299,7 +302,7 @@ void GParse::jogAxes(AxisState axis){
                 posNow_ = decoder_->read();
                 if(posNow_!=posLast_){
                     long diff = posNow_-posLast_;
-                    stepperY_->move((int)diff<<4);
+                    stepperY_->move((int)diff*8);
                     posLast_ = posNow_;
                 }
                 break;
