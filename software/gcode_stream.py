@@ -114,7 +114,10 @@ class Streamer():
         """ Perform exit conditions
         """
         self.gcodefile.close()
-
+        print("Operation complete.")
+        # Question mark signals termination of program.
+        termination_character = "?"
+        self.serialPort.write(termination_character.encode()) 
 
 def main():
     opts, args = init_opts()
