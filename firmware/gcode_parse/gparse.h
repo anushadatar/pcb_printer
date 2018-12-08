@@ -12,6 +12,7 @@ typedef enum{
   Idle,
   Idle_Exit,
   Etching,
+  Etching_Exit,
   LimitError,
 } State;
 
@@ -52,7 +53,7 @@ class GParse
         /*
         Waits over Serial for G-Code commands, and then implements them as needed.
         */
-        void Listening();
+        void Listening(State* state);
         
         /*
         Systematically parses each individual G-Code command as they are heard over Serial.

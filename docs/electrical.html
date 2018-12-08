@@ -127,15 +127,15 @@
     <img src="images/schematic.jpg" alt="logo" height="700">
     <p>On the main board which sits directly on Arduino, we have three A4988 stepper motor drivers and connections to limit
     switches and stepper motors are also provided.</p>
-    <img src="images/logo2.jpg" alt="logo" height="80">
+    <img src="images/electrical_assembly.jpg" alt="logo" height="500">
     <p>On the the first extension board sits a couple of LEDs and a quadrature encoder switch. A press down on the quadrature 
       encoder switch allows the user to cycle through between four modes of zero: Manually(motor drivers disengaged), X, Y, and Z.
       The quadrature encoder ticks provides information on the distance and the direction the motor should be traveling in.</p>
-      <img src="images/logo2.jpg" alt="logo" height="80">
+      <img src="images/electrical_encoder.jpg" alt="logo" height="300">
     <p>The second extension board has a power relay and a N-channel MOSFET to drive the dremel motor throughout the milling 
     process. The power relay is separately controlled by Arduino, ensuring the safe physical disconnect from a dangerous cutting 
     tool from power when it is not enabled.</p>
-    <img src="images/logo2.jpg" alt="logo" height="80">
+    <img src="images/electrical_dcdrive.jpg" alt="logo" height="300">
     <p>An E-switch can also be seen on the outer housing of the gantry for users to cut off power quickly in case of emergencies.</p>
 
     <h2>Power</h2>
@@ -143,8 +143,5 @@
     12V for the control system is stepped down by an Arduino to 5V, which then goes onto power both Arduino and Raspberry Pi. </p>
     <img src="images/logo2.jpg" alt="logo" height="80">
 
-<!-- <center> The electrical system comprises of two parts: the real time control system and the user interface system. The real time
-    control system is based on an Arduino Uno V3. The user interface system is a RasberryPi with a LCDTFT touchscreen. The two 
-    systems are connected through a USB capable that allows the two to communicate serially.</center> -->
   </body>
 </html>

@@ -49,7 +49,9 @@ void loop() {
       break;
     case Idle:
       // parser.adjustZ();
+      Serial.println(axis);
       parser.jogAxes(axis);
+      analogWrite(5, 105);
       break;
     case Idle_Exit:
       parser.motorsEnable();
@@ -57,7 +59,12 @@ void loop() {
       state = Etching;
       break;
     case Etching:
-      parser.Listening();
+      parser.Listening(&state);
+      break;
+    case Etching_Exit:
+      parser.motorsDisable();
+      state = Idle;
+      axis = Free;
       break;
     case LimitError:
       parser.limitSwitchError();
