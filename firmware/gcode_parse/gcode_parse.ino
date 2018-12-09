@@ -64,6 +64,7 @@ void loop() {
     case Etching_Exit:
       parser.motorsDisable();
       state = Idle;
+      axis = Free;
       break;
     case LimitError:
       parser.limitSwitchError();

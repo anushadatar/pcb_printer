@@ -2,44 +2,32 @@
 
 import subprocess
 import tkinter
-import tkinter.simpledialog
+import tkinter.filedialog
 
 # Diameter (inches) of the endmill.
 ENDMILL_DIAMETER = 0.125
 # Diameter (inches) of the engraving bit.
 ENGRAVING_DIAMETER = 0.0039
 
-def usb_etch_run_script():
-    """
-    Searches for file on USB drive.
-    """
-    print("USB script called from GUI.")
-    
-    # TODO Write code to query USB devices for path or set up auto-mount
-           # and write instructions for it accordingly.
-    script_string = "./home/anusha/pcb_printer/software/anusha_run.sh " + path + str(ENGRAVING_DIAMETER)
-
-    # Call the script.
-    subprocess.call(script_string)
-
-
-def path_run_script():
+def path_run_script(bit_diameter):
     """
     Asks user to specify file path of the associated file.  
     """
     print("Path script called from GUI.")
-    path = tkinter.simpledialog.askstring("Title", "Prompt")
-    script_string = ["/home/anusha/pcb_printer/software/anusha_run.sh", path, str(ENGRAVING_DIAMETER)]
+    path =  tkinter.filedialog.askopenfilename()
+    
+    # Assemble appropriate script.
+    script_string = ["bash anusha_run.sh", path, str(bit_diameter)]
     # Call the script.
-    subprocess.call(script_string) 
+    subprocess.call(script_string, shell=True) 
 
 
 gui = tkinter.Tk()
 
-usb_etch_button = tkinter.Button(gui, text="USB File Input (Etch)", command=usb_etch_run_script)
-specify_path_button = tkinter.Button(gui, text="Specify Path", command=path_run_script)
+engraving_choose_file_button = tkinter.Button(gui, text="Choose File (Engraving)", command=path_run_script(ENGRAVING_DIAMETER))
+milling_choose_file_button = tkinter.Button(gui, text="Choose File (Endmill)", command=path_run_script(ENDMILL_DIAMETER))
 
-usb_etch_button.pack()
-specify_path_button.pack()
+engraving_choose_file_button.pack()
+milling_choose_file_button.pack()
 
 gui.mainloop()
