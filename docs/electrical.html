@@ -114,7 +114,7 @@
             <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-12">
                 <br>
-                <h3 class="heading1"><center>Electrical Subsystem</center></h3>
+                <h3 class="heading1"><center>Electrical</center></h3>
                 <br>
                 <figure>
                   <center><img class="image" src="images/placeholder.jpg" alt="Placeholder image"></center>
@@ -129,40 +129,30 @@
             <div class="row" data-aos="fade-up" data-aos-duration="300">
               <div class="col-md-12">
                 <div class="inner-content">
-                 <p>The electrical system comprises of two parts: the real time control system and the user interface system. The real time
-                  control system is based on an Arduino Uno V3. The user interface system is a RasberryPi with a LCDTFT touchscreen. The two 
-                systems are connected through a USB capable that allows the two to communicate serially.</p>
-
+                <p>The electrical subsystem has two main parts: the <b>real time control system</b> and the <b>user interface system</b>. The real time control system is based on an Arduino Uno V3. The user interface system is a Rasberry Pi B+ with a LCDTFT touchscreen. The two systems via serial through a USB cable.</p>
                 <h3>User Interface System</h3>
                 <center><img src="images/logo2.jpg" alt="logo" height="80"></center>
-                <p2>Raspberry Pi, commanding a Thin-Film-Transistor Liquid-Crystal Display touchscreen, provides users a visual interface 
-                  to execute the printing process. Raspberry Pi would handle incoming gerber files in order to convert it to gcode path files. 
-                It also communicates with Arduino over Serial to transmit gcode commands and exchange information on operation status.</p2>
-
+                <p2>A Raspberry Pi B+ commanding a Thin-Film-Transistor Liquid-Crystal Display touchscreen, provides the user with a visual interface with which to execute the printing process and abtracts away  It also communicates with Arduino over Serial to transmit gcode commands and exchange information on operation status.</p2>
 
                 <h3>Real Time Control System</h3>
-                <p>We choose Arduino as our platform of development since it is the fast option to achieve a viable, albeit limited,
-                 performance within the timeline of PoE. Instead of purchasing a pre-designed Arduino shield which would limit the 
-                 degree of freedom when writing our firmware. Our MVP solution is a perforated board that easily sits on top of an Arduino 
-                 Uno similar to other Arduino shields. We were able to customize our electronics easily and at the same time leave room for 
-               future expansions is needed. Below is the schematic of the whole real time control system.</p>
+                <p>We chose to use an Arduino as our main real-time controller because it is the fast option to achieve a viable, albeit limited,
+                 product. Instead of purchasing a pre-designed Arduino shield which would limit our freedom while writing firmware, we (ironically) decided to create a perforated protoboard that easily sits on top of an Arduino Uno similar to other Arduino shields. We also created two extension board which connect to the main board for increased functionality and modualirty. By doing so, we were able to customize our electronics easily and at the same time leave room for future expansions as needed. </p>
                <center><img src="images/schematic.jpg" alt="logo" height="700"></center>
-               <p>On the main board which sits directly on Arduino, we have three A4988 stepper motor drivers and connections to limit
-               switches and stepper motors are also provided.</p>
+               <p>On the main board which sits directly on Arduino, we have three A4988 stepper motor drivers (one for each axis) and connections to limit switches and the stepper motors themselves.</p>
                <center><img src="images/electrical_assembly.jpg" alt="logo" height="500"></center>
                <p>On the the first extension board sits a couple of LEDs and a quadrature encoder switch. A press down on the quadrature 
-                encoder switch allows the user to cycle through between four modes of zero: Manually(motor drivers disengaged), X, Y, and Z.
+                encoder switch allows the user to cycle through between four modes with which to zero the axes prior to starting to mill: Manually (motor drivers disengaged), X, Y, and Z.
               The quadrature encoder ticks provides information on the distance and the direction the motor should be traveling in.</p>
               <center><img src="images/electrical_encoder.jpg" alt="logo" height="300"></center>
-              <p>The second extension board has a power relay and a N-channel MOSFET to drive the dremel motor throughout the milling 
-                process. The power relay is separately controlled by Arduino, ensuring the safe physical disconnect from a dangerous cutting 
+              <p>The second extension board has a power relay and a N-channel MOSFET to drive the z-axis spindle motor throughout the milling 
+                process. The power relay is separately controlled by the Arduino, ensuring the safe physical disconnect from a dangerous cutting 
               tool from power when it is not enabled.</p>
               <center><img src="images/electrical_dcdrive.jpg" alt="logo" height="300"></center>
-              <p>An E-switch can also be seen on the outer housing of the gantry for users to cut off power quickly in case of emergencies.</p>
+              <p>An E-stop switch can also be seen on the outer housing of the gantry for users to cut off power quickly in case of emergencies.</p>
 
-              <h2>Power</h2>
-              <p>The power of our system is spilt upon between the control and the actuation. Both are connected to a 12V wall adapter. 
-              12V for the control system is stepped down by an Arduino to 5V, which then goes onto power both Arduino and Raspberry Pi. </p>
+              <h2>Power Management</h2>
+              <p>The power distribution of our system is spilt between between the main control system and the z-axis actuation. Both are connected to a 12V wall adapter. 
+              The 12V for the control system is stepped down to 5V, which then goes onto power both Arduino and Raspberry Pi. </p>
               <center>img src="images/logo2.jpg" alt="logo" height="80"></center><
 
               <p>Thermal management is another important part of the electrical system. Due to the large amount of current that flow through 
