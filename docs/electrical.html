@@ -137,23 +137,23 @@
                 <h3>Real Time Control System</h3>
                 <p>We chose to use an Arduino as our main real-time controller because it is the fast option to achieve a viable, albeit limited,
                  product. Instead of purchasing a pre-designed Arduino shield which would limit our freedom while writing firmware, we (ironically) decided to create a perforated protoboard that easily sits on top of an Arduino Uno similar to other Arduino shields. We also created two extension board which connect to the main board for increased functionality and modualirty. By doing so, we were able to customize our electronics easily and at the same time leave room for future expansions as needed. </p>
-               <center><img src="images/schematic.jpg" alt="logo" height="700"></center>
+               <center><img src="images/schematic.jpg" alt="logo" style="width:75%"></center>
                <p>On the main board which sits directly on Arduino, we have three A4988 stepper motor drivers (one for each axis) and connections to limit switches and the stepper motors themselves.</p>
-               <center><img src="images/electrical_assembly.jpg" alt="logo" height="500"></center>
+               <center><img src="images/electrical_assembly.jpg" alt="logo" style="width:50%"></center>
                <p>On the the first extension board sits a couple of LEDs and a quadrature encoder switch. A press down on the quadrature 
                 encoder switch allows the user to cycle through between four modes with which to zero the axes prior to starting to mill: Manually (motor drivers disengaged), X, Y, and Z.
               The quadrature encoder ticks provides information on the distance and the direction the motor should be traveling in.</p>
-              <center><img src="images/electrical_encoder.jpg" alt="logo" height="300"></center>
+              <center><img src="images/electrical_encoder.jpg" alt="logo" style="width:30%"></center>
               <p>The second extension board has a power relay and a N-channel MOSFET to drive the z-axis spindle motor throughout the milling 
                 process. The power relay is separately controlled by the Arduino, ensuring the safe physical disconnect from a dangerous cutting 
               tool from power when it is not enabled.</p>
-              <center><img src="images/electrical_dcdrive.jpg" alt="logo" height="300"></center>
+              <center><img src="images/electrical_dcdrive.jpg" alt="logo" style="width:30%"></center>
               <p>An E-stop switch can also be seen on the outer housing of the gantry for users to cut off power quickly in case of emergencies.</p>
 
               <h2>Power Management</h2>
               <p>The power distribution of our system is spilt between between the main control system and the z-axis actuation. Both are connected to a 12V wall adapter. 
               The 12V for the control system is stepped down to 5V, which then goes onto power both Arduino and Raspberry Pi. </p>
-              <center>img src="images/logo2.jpg" alt="logo" height="80"></center><
+              <center><img src="images/logo2.jpg" alt="logo" style="width:50%"></center><
 
               <p>Thermal management is another important part of the electrical system. Due to the large amount of current that flow through 
                 the system to power the DC motor and three different stepper motors. Each stepper motor draws about 0.5A while the DC motor would
