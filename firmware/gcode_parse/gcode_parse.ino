@@ -51,12 +51,12 @@ void loop() {
       // parser.adjustZ();
       Serial.println(axis);
       parser.jogAxes(axis);
-      analogWrite(5, 105);
       break;
     case Idle_Exit:
       parser.motorsEnable();
       Serial.write("?");
       state = Etching;
+      analogWrite(5, 105);
       break;
     case Etching:
       parser.Listening(&state);
@@ -67,7 +67,11 @@ void loop() {
       axis = Free;
       break;
     case LimitError:
-      parser.limitSwitchError();
+      if(!(PINC&_BV(PC0))){
+        state = Idle;
+        axis = Free;
+      }
+      delay(100);
       break;
     default:
       break;
@@ -105,7 +109,7 @@ void serialEvent() {
 
 ISR(PCINT1_vect){
   delay(3);
-  if(PINC&_BV(PC3)){
+  if((PINC&_BV(PC3))&&state==Idle){
     if(axis==Free){
       axis = X;
     }else if(axis==X){
@@ -138,5 +142,9 @@ ISR(PCINT1_vect){
         PORTC |= _BV(PC1) | _BV(PC2); //Turn on LED 0 and 1
         break;
     }
+  }
+  if(PINC&_BV(PC0)){
+    parser.motorsDisable();
+    state = LimitError;
   }
 }
