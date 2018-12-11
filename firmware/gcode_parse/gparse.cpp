@@ -75,8 +75,8 @@ void GParse::Processing(){
         case 0: 
         case 1: 
         {
-            int temp = ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_);
-            DrawLine(temp, ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
+            // int temp = ;
+            DrawLine(ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_), ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
             int z_value = ParseNum('Z', (modeAbs_?pz_:0)) + (modeAbs_?0:pz_);
             if (z_value != -1) {
                 stepperZ_->move((int)(pz_ - z_value));
@@ -178,7 +178,7 @@ void GParse::DrawLine(float newx, float newy){
                 over -= dx_;
                 stepperY_->move(diry_);
             }
-            delayMicroseconds(1500);
+            delayMicroseconds(100);
         }
     }
     else { 
@@ -190,7 +190,7 @@ void GParse::DrawLine(float newx, float newy){
                 over -= dy_;
                 stepperX_->move(dirx_);
             }
-            delayMicroseconds(1500);
+            delayMicroseconds(100);
         }
     }
 

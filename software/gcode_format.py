@@ -19,8 +19,8 @@ class Formatter():
         self.savepath = "output.gcode"
         self.formatted_b = False
         self.formatted = []
-        self.thread = 2 #60/127 is for mm, since flatcam defaults to inch, we should probably use inch here
-        self.step = 2#00
+        self.thread = 12 #60/127 is for mm, since flatcam defaults to inch, we should probably use inch here
+        self.step = 200
         self.microstep = 8
         self.coefficient = self.thread * self.step * self.microstep
 
@@ -76,7 +76,7 @@ class Formatter():
         
     def insertCorrectted(self, each, start_pos, end_pos):
         num = float(each[start_pos+1:end_pos]) * self.coefficient
-        return each[:start_pos+1] + str(round(num, 2)) + " " + each[end_pos:]
+        return each[:start_pos+1] + str(round(num)) + " " + each[end_pos:]
 
     def store(self):
         """ 
