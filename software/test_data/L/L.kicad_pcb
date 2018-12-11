@@ -59,7 +59,7 @@
     (pad_drill 0.762)
     (pad_to_mask_clearance 0.2)
     (aux_axis_origin 0 0)
-    (visible_elements FFFFFF7F)
+    (visible_elements 7FFFFFFF)
     (pcbplotparams
       (layerselection 0x00020_7ffffffe)
       (usegerberextensions false)
@@ -100,7 +100,7 @@
     (uvia_drill 0.1)
   )
 
-  (gr_line (start 2.54 19.05) (end 11.43 19.05) (layer F.SilkS) (width 5))
-  (gr_line (start 2.54 2.54) (end 2.54 19.05) (layer F.SilkS) (width 5))
+  (gr_line (start 2.54 31.75) (end 45.72 31.75) (layer F.SilkS) (width 5))
+  (gr_line (start 2.54 2.54) (end 2.54 31.75) (layer F.SilkS) (width 5))
 
 )
