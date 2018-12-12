@@ -66,20 +66,16 @@ void GParse::Listening(State* state){
 }
 
 void GParse::Processing(){
-    //  Serial.println(buffer);
-    // Serial.print("i ");Serial.println(i_);
     int cmd=(int)ParseNum('G',-1);
-    // Serial.print("cmd ");Serial.println(cmd);
     switch(cmd){
         // Linear motion.
         case 0: 
         case 1: 
         {
-            // int temp = ;
             DrawLine(ParseNum('X',(modeAbs_?px_:0)) + (modeAbs_?0:px_), ParseNum('Y',(modeAbs_?py_:0)) + (modeAbs_?0:py_) );
-            int z_value = ParseNum('Z', (modeAbs_?pz_:0)) + (modeAbs_?0:pz_);
+            long z_value = ParseNum('Z', (modeAbs_?pz_:0)) + (modeAbs_?0:pz_);
             if (z_value != -1) {
-                stepperZ_->move((int)(pz_ - z_value));
+                stepperZ_->move(pz_ - z_value);
                 pz_ = z_value;
                 Serial.println(pz_);
             }
@@ -293,7 +289,7 @@ void GParse::jogAxes(AxisState axis){
                 posNow_ = decoder_->read();
                 if(posNow_!=posLast_){
                     long diff = posNow_-posLast_;
-                    stepperX_->move((int)diff*8);
+                    stepperX_->move((int)diff*16);
                     posLast_ = posNow_;
                 }
                 break;
@@ -302,7 +298,7 @@ void GParse::jogAxes(AxisState axis){
                 posNow_ = decoder_->read();
                 if(posNow_!=posLast_){
                     long diff = posNow_-posLast_;
-                    stepperY_->move((int)diff*8);
+                    stepperY_->move((int)diff*16);
                     posLast_ = posNow_;
                 }
                 break;
@@ -311,10 +307,23 @@ void GParse::jogAxes(AxisState axis){
                 posNow_ = decoder_->read();
                 if(posNow_!=posLast_){
                     long diff = posNow_-posLast_;
-                    stepperZ_->move((int)diff<<2);
+                    stepperZ_->move((int)diff*4);
                     posLast_ = posNow_;
                 }         
                 break;
         }
     }
+}
+
+void GParse::setupTimerInterrupt(){
+    TCCR2B |= _BV(CS22) | _BV(CS21) | _BV(CS2O);
+    TIMSK2 |= _BV(TOIE2);
+}
+
+void GParse::freeTimerInterrupt(){
+    TIMSK2 &= ~_BV(TOIE2);
+}
+
+void GParse::clearDecoder(){
+    firstDecode_ = true;
 }

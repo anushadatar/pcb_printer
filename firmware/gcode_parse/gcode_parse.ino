@@ -17,6 +17,7 @@ const uint8_t DIRY_pin = 3;
 const uint8_t STEPY_pin = 4;
 const uint8_t DIRZ_pin = 6;
 const uint8_t STEPZ_pin = 7;
+volatile uint8_t count=0;
 
 A4988 stepperX(MOTOR_STEPS, DIRX_pin, STEPX_pin, ENABLE, MS1, MS2, MS3);
 A4988 stepperY(MOTOR_STEPS, DIRY_pin, STEPY_pin, ENABLE, MS1, MS2, MS3);
@@ -57,12 +58,15 @@ void loop() {
       Serial.write("?");
       state = Etching;
       analogWrite(5, 105);
+      parser.clearDecoder();
+      parser.setupTimerInterrupt();
       break;
     case Etching:
       parser.Listening(&state);
       break;
     case Etching_Exit:
       parser.motorsDisable();
+      parser.freeTimerInterrupt();
       state = Idle;
       axis = Free;
       break;
@@ -147,4 +151,11 @@ ISR(PCINT1_vect){
     parser.motorsDisable();
     state = LimitError;
   }
+}
+
+ISR(TIMER2_OVF_vect){
+  if(count==255){
+    parser.adjustZ();
+  }
+  count++;
 }

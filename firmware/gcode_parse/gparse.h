@@ -128,6 +128,12 @@ class GParse
         */
         void jogAxes(AxisState axis);
 
+        void setupTimerInterrupt();
+
+        void freeTimerInterrupt();
+
+        void clearDecoder();
+
     private:
         // const uint8_t max_length;
         const unsigned long baud_;

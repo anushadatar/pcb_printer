@@ -116,6 +116,12 @@
                 <br>
                 <h3 class="heading1"><center>Heading</center></h3>
                 <br>
+                <p>To handle the proper safety and etching sequence, we implement a state machine for our Arduino 
+                that is composed of three main states: Idle, Operational, and Error. The Idle state is made up of 
+                three substates: Idle Entry, Idle, and Idle Exit. Idle(substate) is then made up of four sub-substates 
+                that are: Free, X, Y, and Z. The Operational state is made up of two substates: Etching and Etching Exit. 
+                The Error state currently consists of only one state: Limit Switch Error. The flows between all these 
+                different states in best illustration in the image below.</p>
                 <center>
                   <figure>
                     <img class="image" src="images/Arduino_State_Machine.png" alt="firmware_state_machine">
