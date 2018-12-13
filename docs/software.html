@@ -71,8 +71,16 @@
                   <li class="nav-item">
                     <a class="nav-link" href="system.html">Architecture</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="mechanical.html">Mechanical</a>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Mechanical
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="mechanical-overview.html">Overview</a>
+                      <a class="dropdown-item" href="table.html">Compound Table</a>
+                      <a class="dropdown-item" href="spindle.html">Spindle Assembly</a>
+                      <a class="dropdown-item" href="enclosure.html">Enclosure</a>
+                    </div>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="electrical.html">Electrical</a>
@@ -109,57 +117,78 @@
 
         <div class="row" data-aos="fade-up" data-aos-duration="300">
 
-          <!-- Centered image container. -->
-          <div class="container">
-            <div class="row">
-              <div class="col-xs-12 col-sm-12 col-md-12">
-                <br>
-                <h3 class="heading1"><center>Heading</center></h3>
-                <br>
-                <p>To handle the proper safety and etching sequence, we implement a state machine for our Arduino 
-                that is composed of three main states: Idle, Operational, and Error. The Idle state is made up of 
-                three substates: Idle Entry, Idle, and Idle Exit. Idle(substate) is then made up of four sub-substates 
-                that are: Free, X, Y, and Z. The Operational state is made up of two substates: Etching and Etching Exit. 
-                The Error state currently consists of only one state: Limit Switch Error. The flows between all these 
-                different states in best illustration in the image below.</p>
-                <center>
-                  <figure>
-                    <img class="image" src="images/Arduino_State_Machine.png" alt="firmware_state_machine">
-                    <figcaption>The code architecture used in Arduino for real time control.</figcaption>
-                  </figure>
-                </center>
-                <p>During the Idle entry state, Arduino sets up its proper general purpose input output to drive the different stepper
-                  motor and automatically transition to Idle state. Within the Idle state, a user is free to choose between jogging a specific axis and
-                  manually turning the lead screw for a particular axis. Jogging a specific axis is achieved by reading from a quadrature encoder. The switch between
-                  axes are done with a push on the encoder push button.
-                </p>
-                <p>When a milling job is ready to be executed, the Rasberry Pi would send a start signal that triggers an interrupt on the Arduino so that
-                  it would enter the state Idle Exit. In Idle Exit, the Arduino would enable all step motors and dremel motor and spin up the dremel motor.
-                </p>
-                <p>Etching immediately follows Idle Exit. Etching motor activelt listens to the serial port and runs gcode parser. The spindle speed 
-                  is held constant throughout while three axes are moved according to the results of gcode parsing. Upon the last gcode command from 
-                  the RasberryPi, a end signal would also be sent. The Arduino will go back to Idle state once the last command is executed.
-                </p>
-              </div>
-            </div>
-          </div>
-          <!-- End centered image container. -->
+
 
           <!-- Centered text container. -->
           <div class="container">
             <div class="row" data-aos="fade-up" data-aos-duration="300">
               <div class="col-md-12">
+                <br>
+                <h3 class="heading1"><center><a href="https://github.com/anushadatar/pcb_printer">Overall Framework</a></center></h3>
+                <br>
                 <div class="inner-content">
-                 <p> Text goes here! </p>
-                 <center><img src="images/logo2.jpg" alt="logo" height="80"></center>
+                 <p> The etch as schech computing framework requires two distinct systems - a computer capable of process PCB designs and creating and processing the approprirate toolpaths and a real-time microcontroller to actually deliver these commands to the motors. We chose to create a system capable of running on Ubuntu and debian machines (and integrated directly with a Raspberry Pi minicomputer) to handle more expensive computation and an Arduino Uno V3 as our real-time microcontroller. </p>
+                 <p> With these two systems, we can create a seammless workflow for the user - they transfer the file they hope to etch onto a workpiece to the computer, interact with a very simple Graphical User Interface (GUI) to confirm their selection, and watch the operation progress and complete. </p>
+                 <center><img src="images/software-architecture.png" alt="Software Architecture Overview Diagram" height="400"></center>
                </div>
                <hr>
-             </div>
-           </div>
-         </div>
-         <!-- End centered container. -->
+               <br>
+               <h3><center><a href="https://github.com/anushadatar/pcb_printer/tree/master/firmware">Firmware Architecture</a></center></h3>
+               <br>
+               <p>To safely and systematically handle the etching sequence, we implemented a state machine on the Arduino 
+                that is composed of three main states: Idle, Operational, and Error. The Idle state is made up of 
+                three additional substates: Idle Entry, Idle, and Idle Exit. Then, the Idle substate is made up of four sub-substates 
+                which are: Free, X, Y, and Z. The Operational state is made up of two substates: Etching and Etching Exit. 
+                The Error state currently consists of only one state: Limit Switch Error. The flows between all these 
+              different states in best illustrated through the image below.</p>
+              <center>
+                <figure>
+                  <img class="image" src="images/Arduino_State_Machine.png" alt="firmware_state_machine">
+                  <figcaption>The code architecture used in Arduino for real time control.</figcaption>
+                </figure>
+              </center>
+              <p>During the Idle entry state, Arduino sets up its proper general purpose input output to drive the different stepper
+                motor and automatically transition to Idle state. Within the Idle state, a user is free to choose between jogging a specific axis and
+                manually turning the lead screw for a particular axis. The amount by which to move a specific axis is determined by reading values from a quadrature encoder on the front panel of the enclosure for the system. Pushing down on the encoder triggers a switch between the axes, or a transition between the substates of the Idle substate.
+              </p>
+              <p>When a milling job is ready to be executed, the Rasberry Pi sends a start signal that triggers an interrupt on the Arduino so that
+                it enters the state Idle Exit. In Idle Exit, the Arduino enables all of the stepper motors and begins to spin the DC motor on the z axis.
+              </p>
+              <p>Following the Idle Exit state, the system begins etching and enters the operational state. In this case, the Arduino actively listens on the serial port and runs a gcode parser. It holds the spindle speed constant throughout while the Arduino controls the stepper motors for each of the three axes according to the results of parsing the gcode sent to the Arduino from the Raspberry Pi. The program terminates when the Arduino receives an ending signal from the Raspberry pi along with the final line of gcode to interpret and execute. Once the last command has been executed, the Arduino will return to the Idle state.
+              </p>
+              <h3><center><a href="https://github.com/anushadatar/pcb_printer/tree/master/software">Software Architecture</a></center></h3>
+              <br>
+              <p> Some words and things </p>
+              <br>
+              <h3> Dependencies </h3>
+              Both the firmware and software systems leverage a large number of existing frameworks and libraries. Those frameworks (and associated requirements for functionality) include:
+              <ul>
+                <li> Arduino </li>
+                <ul>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
+                <li> Python 2</li>
+                <ul>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
+                <li> Python 3</li>
+                <ul>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
+
+                <li> Flatcam </li>
+                <ul>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
 
 
-
-       </body>
-       </html>
+              </body>
+              </html>

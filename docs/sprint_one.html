@@ -1,33 +1,33 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Etch a Schetch</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/main.css">
-  </head>
-  <body>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
-    <!-- Custom JavaScript -->
-    <script src="js/animate.js"></script>
-    <script src="js/custom.js"></script>
-    <script>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Etch a Schetch</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
+  <!-- Custom JavaScript -->
+  <script src="js/animate.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
     $('.carousel').carousel({
-       interval: 2000
-    })
+     interval: 2000
+   })
 
     window.onscroll = function() {myFunction()};
 
@@ -35,116 +35,124 @@
     var sticky = header.offsetTop;
 
     function myFunction() {
-        if (window.pageYOffset > sticky) {
-            header.classList.add("sticky");
-        } else {
-            header.classList.remove("sticky");
-        }
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
     }
-</script>
-     <script>
-        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
-            event.preventDefault();
-            $(this).ekkoLightbox();
-        });
-    </script>
+  </script>
+  <script>
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox();
+    });
+  </script>
 
-    <!-- Navigation -->
+  <!-- Navigation -->
     <!--- For every new page, be sure to add the file.html and then include
           a link to it here as well so it can be accessed. 
           Make sure that the href is just to the page in the hierarchy and
           not absolutely addressed so it can be used on the olin server. -->
-    <nav id="myHeader" class="header navbar navbar-expand-lg navbar-dark">
-      <div class="container">
-        <a class="navbar-brand" href="index.html"><img src="images/Etcha.png" alt="logo" height="80"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="system.html">Architecture</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="mechanical.html">Mechanical</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="electrical.html">Electrical</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="software.html">Software</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="process.html">Process</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="budget.html">Budget</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="team.html">Team</a>
-            </li>
-          </ul>
+          <nav id="myHeader" class="header navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+              <a class="navbar-brand" href="index.html"><img src="images/Etcha.png" alt="logo" height="80"></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home
+                      <span class="sr-only">(current)</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="system.html">Architecture</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Mechanical
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="mechanical-overview.html">Overview</a>
+                      <a class="dropdown-item" href="table.html">Compound Table</a>
+                      <a class="dropdown-item" href="spindle.html">Spindle Assembly</a>
+                      <a class="dropdown-item" href="enclosure.html">Enclosure</a>
+                    </div>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="electrical.html">Electrical</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="software.html">Software</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="process.html">Process</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="budget.html">Budget</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="team.html">Team</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          
+          <header class="banner">                                                     
+            <div class="gradient"></div>                                              
+            <div class="container">                                                 
+              <div class="row">                                                     
+                <div class="col-sm-12 heading">                                     
+                  <h1 data-aos="Fade-right" data-aos-delay="300"> Sprint One </h1>
+                  <h5 data-aos="Fade-left" data-aos-delay="300"> Normal engineers fry breadboards, but gantry engineers fry motherboards.</h5>
+                </div>                                                              
+              </div>                                                                
+            </div>                                                                  
+          </div>                                                                    
+        </header>
+        <div class="container">
+          <div class="row" data-aos="fade-up" data-aos-duration="300">
+            <div class="col-md-12">
+              <div class="inner-content">
+                <center><iframe width="560" height="315" src="https://www.youtube.com/embed/jSKyoZaL6o8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
+                <center><h2>Mechanical</h2></center>
+                <p>The first iteration of the compound table had a wider footprint and used custom 3D printed sliders as linear bearings
+                  on the 8020 frame members. The lead-screw bushings, motor coupers, and a variety of other parts were 3D printed, and all of 
+                the flat components were laser-cut.</p>
+
+                <center><h2>Electrical</h2></center>
+                <p>In the very first sprint, we current electrical and controls system for the X-Y gantry on breadboard. It includes:</p>
+                
+                <ul>
+                  <li>A4988 stepper motor drivers</li>
+                  <br>
+                  <li>Arduino Uno</li>
+                  <br>
+                  <li>A 12 Volt Power Supply</li>
+                  <br>
+                  <li>Peripherals for component configuration and power distribution</li>
+                </ul>
+                <p>Biggest Takeaway: The robustness of the entire system is based on properly protecting our components. So far, we’ve 
+                destroyed two (2) motor controllers and one (1) computer motherboard.</p>
+
+                <center><h2>Software</h2></center>
+                <p>During our very first sprint, we started out writing our own gcode parser compatible with A4988 motor controllers. We were 
+                  able to cover both linear movement solely in the X or Y direction and diagonal movement that requirement X-Y coordination. By the
+                  end of the sprint, our gcode parse was able to ultimately achieve arc command and draw a circle.
+                </p>
+                <img src="images/sp1software.JPG" alt="software" height="220">
+              </div>
+              <hr>
+            </div>
+          </div>
         </div>
-      </div>
-    </nav>
-                                                                              
-    <header class="banner">                                                     
-      <div class="gradient"></div>                                              
-        <div class="container">                                                 
-          <div class="row">                                                     
-            <div class="col-sm-12 heading">                                     
-              <h1 data-aos="Fade-right" data-aos-delay="300"> Sprint One </h1>
-              <h5 data-aos="Fade-left" data-aos-delay="300"> Normal engineers fry breadboards, but gantry engineers fry motherboards.</h5>
-            </div>                                                              
-          </div>                                                                
-        </div>                                                                  
-      </div>                                                                    
-    </header>
-    <div class="container">
-        <div class="row" data-aos="fade-up" data-aos-duration="300">
-          <div class="col-md-12">
-            <div class="inner-content">
-    <center><iframe width="560" height="315" src="https://www.youtube.com/embed/jSKyoZaL6o8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
-    <center><h2>Mechanical</h2></center>
-    <p>The first iteration of the compound table had a wider footprint and used custom 3D printed sliders as linear bearings
-    on the 8020 frame members. The lead-screw bushings, motor coupers, and a variety of other parts were 3D printed, and all of 
-    the flat components were laser-cut.</p>
-
-    <center><h2>Electrical</h2></center>
-    <p>In the very first sprint, we current electrical and controls system for the X-Y gantry on breadboard. It includes:</p>
-    
-    <ul>
-        <li>A4988 stepper motor drivers</li>
-        <br>
-        <li>Arduino Uno</li>
-        <br>
-        <li>A 12 Volt Power Supply</li>
-        <br>
-        <li>Peripherals for component configuration and power distribution</li>
-    </ul>
-    <p>Biggest Takeaway: The robustness of the entire system is based on properly protecting our components. So far, we’ve 
-      destroyed two (2) motor controllers and one (1) computer motherboard.</p>
-
-    <center><h2>Software</h2></center>
-    <p>During our very first sprint, we started out writing our own gcode parser compatible with A4988 motor controllers. We were 
-      able to cover both linear movement solely in the X or Y direction and diagonal movement that requirement X-Y coordination. By the
-      end of the sprint, our gcode parse was able to ultimately achieve arc command and draw a circle.
-    </p>
-    <img src="images/sp1software.JPG" alt="software" height="220">
-       </div>
-      <hr>
-      </div>
-    </div>
-  </div>
-  <!-- End centered container. -->
+        <!-- End centered container. -->
 
 
-  </body>
-</html>
+      </body>
+      </html>
 
 
