@@ -158,7 +158,11 @@
               </p>
               <h3><center><a href="https://github.com/anushadatar/pcb_printer/tree/master/software">Software Architecture</a></center></h3>
               <br>
-              <p> Some words and things </p>
+              <p> Due to the fact that FlatCAM's raw output often result in unssucessful gcode parsing on the Arduino end, "gcode_format.py" would take in the path of a FlatCam output gcode file and format its content to be much more standarized gcode commands.
+                "gcode_stream.py" would then take in the formatted gcode and try to send the commands line by line for the Arduino to execute. A sort of custom handshaking protocal is also
+                established between Arduino and the gcoder streamer to make sure that a new command would only be dispatched in the wake of last command's successful
+                execution. 
+              </p>
               <br>
               <h3> Dependencies </h3>
               Both the firmware and software systems leverage a large number of existing frameworks and libraries. Those frameworks (and associated requirements for functionality) include:
