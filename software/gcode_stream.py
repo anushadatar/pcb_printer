@@ -77,8 +77,8 @@ class Streamer():
     #         continue
     #     # Allow arduino to stay in relative mode unless we are streaming a gcode file
     #     if self.opts.stream:
-    #         self.serialPort.write(" G90\n".encode('utf-8'))
-    #         print("------------Stream Mode------------")
+        self.serialPort.write(" G90\n".encode('utf-8'))
+        print("------------Stream Mode------------")
 
 
     def open_gcode(self):
