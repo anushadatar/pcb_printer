@@ -124,31 +124,32 @@
               <div class="col-md-12">
                 <div class="inner-content">
                   <center>
-                                    <br>
-                  <p>The electrical subsystem has two main parts: the <b>real time control system</b> and the <b>user interface system</b>. The real time control system is based on an Arduino Uno V3. The user interface system is a Rasberry Pi B+ with a LCDTFT touchscreen. The two systems via serial through a USB cable.</p>
-                  <h3>User Interface System</h3>
-                  #TODO Make this a nice image of the front panel with the GUI.
-                  <center><img src="images/logo2.jpg" alt="logo" height="80"></center>
-                  <p2>A Raspberry Pi B+ commanding a Thin-Film-Transistor Liquid-Crystal Display touchscreen, provides the user with a visual interface with which to execute the printing process and abtracts away  It also communicates with Arduino over Serial to transmit gcode commands and exchange information on operation status.</p2>
-                  <br>
-                  <h3>Real Time Control System</h3>
-                  <p>We chose to use an Arduino as our main real-time controller because it provides a fast method by which to achieve a viable product despite its limitations. Instead of purchasing a pre-designed Arduino shield which would limit our freedom while writing firmware and configuring our integration with mechanical systems, we (ironically) decided to create our own perforated protoboard that easily sits on top of an Arduino Uno similar to other Arduino shields. We also created two extension boards which connect to the main board for increased functionality and modularity. By doing so, we were able to both customize our electronics easily and leave room for future expansions as needed. </p>
-                  <center><img src="images/schematic.jpg" alt="logo" style="width:75%"></center>
-                  <p>On the main board which sits directly on the Arduino, we have three A4988 stepper motor drivers (one for each axis) and connections to limit switches and the stepper motors themselves.</p>
-                  <center><img src="images/electrical_assembly.jpg" alt="logo" style="width:50%"></center>
-                  <p>On the the first extension board sit two LEDs and a quadrature encoder switch. A press down on the quadrature encoder switch allows the user to cycle through between four modes with which to zero the axes prior to when the mill starts: Manual (motor drivers disengaged so users can turn the lead screw to move the axes), X, Y, and Z. The quadrature encoder ticks provides information on the distance and the direction the motor should be traveling in.</p>
-                  <center><img src="images/electrical_encoder.jpg" alt="logo" style="width:30%"></center>
-                  <p>The second extension board has a power relay and a N-channel MOSFET to drive the z-axis spindle motor throughout the milling 
-                    process. The power relay is separately controlled by the Arduino, ensuring the safe physical disconnect from a dangerous cutting 
-                  tool from power when it is not enabled.</p>
-                  <center><img src="images/electrical_dcdrive.jpg" alt="logo" style="width:30%"></center>
-                  <p>An E-stop switch is connected to the outer housing of the gantry for users to cut off power quickly in case of emergencies.</p>
-                  <br>
-                  <h2>Power Management</h2>
-                  <p>The power distribution of our system is spilt between between the main control system and the z-axis actuation. Both are connected to a 12V wall adapter. The Raspberry Pi uses a 5V wall adapter, and it also powers the Arduino. </p>
-                  <p>Thermal management is another important part of the electrical system because of the large amount of current that flows through 
-                    the system to power the DC motor and three different stepper motors. Each stepper motor draws about 0.5A while the DC motor pulls about 1.3A. For passive heat dissipation, we placed heat sinks on all three A4988 stepper motor modules and we used a large through-hole N-MOSFET with a large heat conductive. We also used a computer fan to circulate air actively across the electronics.
-                  </p>
+                    <br>
+                    <p>The electrical subsystem has two main parts: the <b>real time control system</b> and the <b>user interface system</b>. The real time control system is based on an Arduino Uno V3. The user interface system is a Rasberry Pi B+ with a LCDTFT touchscreen. The two systems via serial through a USB cable.</p>
+                    <h3 class="heading1"><center>User Interface System</center></h3>
+                    #TODO Make this a nice image of the front panel with the GUI.
+                    <center><img src="images/logo2.jpg" alt="logo" height="80"></center>
+                    <p2>A Raspberry Pi B+ commanding a Thin-Film-Transistor Liquid-Crystal Display touchscreen, provides the user with a visual interface with which to execute the printing process and abtracts away  It also communicates with Arduino over Serial to transmit gcode commands and exchange information on operation status.</p2>
+                    <br>
+                    <h3 class="heading1"><center>Real Time Control System</center></h3>
+                    <p>We chose to use an Arduino as our main real-time controller because it provides a fast method by which to achieve a viable product despite its limitations. Instead of purchasing a pre-designed Arduino shield which would limit our freedom while writing firmware and configuring our integration with mechanical systems, we (ironically) decided to create our own perforated protoboard that easily sits on top of an Arduino Uno similar to other Arduino shields. We also created two extension boards which connect to the main board for increased functionality and modularity. By doing so, we were able to both customize our electronics easily and leave room for future expansions as needed. </p>
+                    <center><img src="images/schematic.jpg" alt="logo" style="width:75%"></center>
+                    <p>On the main board which sits directly on the Arduino, we have three A4988 stepper motor drivers (one for each axis) and connections to limit switches and the stepper motors themselves.</p>
+                    <center><img src="images/electrical_assembly.jpg" alt="logo" style="width:50%"></center>
+                    <p>On the the first extension board sit two LEDs and a quadrature encoder switch. A press down on the quadrature encoder switch allows the user to cycle through between four modes with which to zero the axes prior to when the mill starts: Manual (motor drivers disengaged so users can turn the lead screw to move the axes), X, Y, and Z. The quadrature encoder ticks provides information on the distance and the direction the motor should be traveling in.</p>
+                    <center><img src="images/electrical_encoder.jpg" alt="logo" style="width:30%"></center>
+                    <p>The second extension board has a power relay and a N-channel MOSFET to drive the z-axis spindle motor throughout the milling 
+                      process. The power relay is separately controlled by the Arduino, ensuring the safe physical disconnect from a dangerous cutting 
+                    tool from power when it is not enabled.</p>
+                    <center><img src="images/electrical_dcdrive.jpg" alt="logo" style="width:30%"></center>
+                    <p>An E-stop switch is connected to the outer housing of the gantry for users to cut off power quickly in case of emergencies.</p>
+                    <br>
+                    <h3 class="heading1"><center>Power Management</center></h3>
+                    <br>
+                    <p>The power distribution of our system is spilt between between the main control system and the z-axis actuation. Both are connected to a 12V wall adapter. The Raspberry Pi uses a 5V wall adapter, and it also powers the Arduino. </p>
+                    <p>Thermal management is another important part of the electrical system because of the large amount of current that flows through 
+                      the system to power the DC motor and three different stepper motors. Each stepper motor draws about 0.5A while the DC motor pulls about 1.3A. For passive heat dissipation, we placed heat sinks on all three A4988 stepper motor modules and we used a large through-hole N-MOSFET with a large heat conductive. We also used a computer fan to circulate air actively across the electronics.
+                    </p>
                   </center>
                 </div>
                 <hr>

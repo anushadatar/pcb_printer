@@ -117,33 +117,38 @@
           <div class="row" data-aos="fade-up" data-aos-duration="300">
             <div class="col-md-12">
               <div class="inner-content">
-                <center><iframe width="560" height="315" src="https://www.youtube.com/embed/jSKyoZaL6o8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
-                <center><h2>Mechanical</h2></center>
-                <p>The first iteration of the compound table had a wider footprint and used custom 3D printed sliders as linear bearings
-                  on the 8020 frame members. The lead-screw bushings, motor coupers, and a variety of other parts were 3D printed, and all of 
-                the flat components were laser-cut.</p>
+                <center>
+                  <br>
+                  <h3><center>Goal</center></h3>
+                  <h5> Our sprint one goal was to build a solid, functional two-axis gantry framework capable of traversing the X-Y plane and drawing continuous figures. </h5>
+                  <br>
+                  <h3 class="heading1"><center>Demonstration</center></h3>
 
-                <center><h2>Electrical</h2></center>
-                <p>In the very first sprint, we current electrical and controls system for the X-Y gantry on breadboard. It includes:</p>
-                
-                <ul>
-                  <li>A4988 stepper motor drivers</li>
-                  <br>
-                  <li>Arduino Uno</li>
-                  <br>
-                  <li>A 12 Volt Power Supply</li>
-                  <br>
-                  <li>Peripherals for component configuration and power distribution</li>
-                </ul>
-                <p>Biggest Takeaway: The robustness of the entire system is based on properly protecting our components. So far, we’ve 
-                destroyed two (2) motor controllers and one (1) computer motherboard.</p>
+                  <center><iframe width="560" height="315" src="https://www.youtube.com/embed/jSKyoZaL6o8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
+                  <h3 class="heading1"><center>Mechanical</center></h3>
+                  <p>The first iteration of the compound table had a wider footprint and used custom 3D printed sliders as linear bearings
+                    on the 8020 frame members. The lead-screw bushings, motor coupers, and a variety of other parts were 3D printed, and all of 
+                  the flat components were laser-cut.</p>
 
-                <center><h2>Software</h2></center>
-                <p>During our very first sprint, we started out writing our own gcode parser compatible with A4988 motor controllers. We were 
-                  able to cover both linear movement solely in the X or Y direction and diagonal movement that requirement X-Y coordination. By the
-                  end of the sprint, our gcode parse was able to ultimately achieve arc command and draw a circle.
-                </p>
-                <img src="images/sp1software.JPG" alt="software" height="220">
+                  <h3 class="heading1"><center>Electrical</center></h3>
+                  <p>In the very first sprint, we prototyped the electrical and controls system for the X-Y gantry on a breadboard. It included:</p>
+
+                  <ul>
+                    <li>A4988 stepper motor drivers</li> <br>
+                    <li>Arduino Uno</li> <br>
+                    <li>A 12 Volt Power Supply</li> <br>
+                    <li>Peripherals for component configuration and power distribution</li> <br>
+                  </ul>
+
+                  <p>Our biggest electrical takeaway from sprint one was that the robustness of the entire system is based on properly protecting our components. Just in sprint one, we destoryed two (2) motor controllers and one (1) computer motherboard.</p>
+
+                  <h3 class="heading1"><center>Software</center></h3>
+                  <p>During our very first sprint, we started out writing our own gcode parser compatible with A4988 motor controllers. We were 
+                    able to cover both linear movement solely in the X or Y direction and diagonal movement that required X-Y coordination. By the
+                    end of the sprint, our gcode parser was able to execute the arc command and draw a circle, which requires use of both axes.
+                  </p>
+                  <img src="images/sp1software.JPG" alt="software" height="220">
+                </center>
               </div>
               <hr>
             </div>
