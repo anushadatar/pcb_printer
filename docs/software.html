@@ -128,6 +128,18 @@
                     <figcaption>The code architecture used in Arduino for real time control.</figcaption>
                   </figure>
                 </center>
+                <p>During the Idle entry state, Arduino sets up its proper general purpose input output to drive the different stepper
+                  motor and automatically transition to Idle state. Within the Idle state, a user is free to choose between jogging a specific axis and
+                  manually turning the lead screw for a particular axis. Jogging a specific axis is achieved by reading from a quadrature encoder. The switch between
+                  axes are done with a push on the encoder push button.
+                </p>
+                <p>When a milling job is ready to be executed, the Rasberry Pi would send a start signal that triggers an interrupt on the Arduino so that
+                  it would enter the state Idle Exit. In Idle Exit, the Arduino would enable all step motors and dremel motor and spin up the dremel motor.
+                </p>
+                <p>Etching immediately follows Idle Exit. Etching motor activelt listens to the serial port and runs gcode parser. The spindle speed 
+                  is held constant throughout while three axes are moved according to the results of gcode parsing. Upon the last gcode command from 
+                  the RasberryPi, a end signal would also be sent. The Arduino will go back to Idle state once the last command is executed.
+                </p>
               </div>
             </div>
           </div>
