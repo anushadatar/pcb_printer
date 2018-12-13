@@ -1,8 +1,12 @@
+#!/bin/bash
+
 ### Script to automate mill operation.
 # Argument 1 should be file path.
 # Argument 2 should be tool diameter (in inches). 
 
 # Crete an appropriate tcl file for the given constraints.
+echo $1
+echo $2
 python3 create_shellfile.py --file $1 --tool-diameter $2 
 
 # Run the Flatcam software to create the gcode file.
