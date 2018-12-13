@@ -53,12 +53,12 @@ class Streamer():
 
     
         time.sleep(20)
-        self.serialPort.write("!".encode('utf-8'))
-        while (self.serialPort.readline().decode('utf-8') != "?"):
+        self.serialPort.write("!".encode())
+        while (self.serialPort.readline().decode() != "?"):
             continue
         # Allow arduino to stay in relative mode unless we are streaming a gcode file
         if self.opts.stream:
-            self.serialPort.write(" G90\n".encode('utf-8'))
+            self.serialPort.write(" G90\n".encode())
             print("------------Stream Mode------------")
 
     def open_gcode(self):
@@ -78,15 +78,15 @@ class Streamer():
         if self.opts.stream:
             for each_line in self.gcodecontent:
                 print(each_line)
-                self.serialPort.write(each_line.encode('utf-8'))
-                self.lineOfData = str(self.serialPort.readline().decode('utf-8'))
+                self.serialPort.write(each_line.encode())
+                self.lineOfData = str(self.serialPort.readline().decode())
                 
                 while len(self.lineOfData) == 0:
-                    self.lineOfData = str(self.serialPort.readline().decode('utf-8'))
+                    self.lineOfData = str(self.serialPort.readline().decode())
                 # print("Data: ",self.lineOfData)
                 while self.lineOfData[-1]!="$":
                     try:
-                        self.lineOfData = str(self.serialPort.readline().decode('utf-8'))
+                        self.lineOfData = str(self.serialPort.readline().decode())
                         # print(self.lineOfData, end=" ")
                         # print("length of the message", len(self.lineOfData))
                         if(len(self.lineOfData)==0):
@@ -102,13 +102,13 @@ class Streamer():
         if not self.opts.stream:
             if self.opts.x != 0:
                 temp = " G00 X" + str(self.opts.x) + "\n"
-                self.serialPort.write(temp.encode('utf-8'))
+                self.serialPort.write(temp.encode())
             elif self.opts.y != 0:
                 temp = " G00 Y" + str(self.opts.y) + "\n"
-                self.serialPort.write(temp.encode('utf-8'))
+                self.serialPort.write(temp.encode())
             elif self.opts.z != 0:
                 temp = " G00 Z" + str(self.opts.z) + "\n"
-                self.serialPort.write(temp.encode('utf-8'))
+                self.serialPort.write(temp.encode())
 
     def exit(self):
         """ Perform exit conditions
@@ -117,7 +117,7 @@ class Streamer():
         print("Operation complete.")
         # Question mark signals termination of program.
         termination_character = "?"
-        self.serialPort.write(termination_character.encode('utf-8')) 
+        self.serialPort.write(termination_character.encode()) 
 
 def main():
     opts, args = init_opts()
