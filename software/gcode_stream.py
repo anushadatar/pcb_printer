@@ -52,7 +52,7 @@ class Streamer():
             print('Serial Port ttyACM1\n')
 
     
-        time.sleep(10)
+        time.sleep(5)
         
         self.serialPort.write("!".encode('utf-8'))
 
