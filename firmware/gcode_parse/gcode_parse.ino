@@ -18,6 +18,7 @@ const uint8_t STEPY_pin = 4;
 const uint8_t DIRZ_pin = 6;
 const uint8_t STEPZ_pin = 7;
 volatile uint8_t count=0;
+int temp_speed;
 
 A4988 stepperX(MOTOR_STEPS, DIRX_pin, STEPX_pin, ENABLE, MS1, MS2, MS3);
 A4988 stepperY(MOTOR_STEPS, DIRY_pin, STEPY_pin, ENABLE, MS1, MS2, MS3);
@@ -52,21 +53,30 @@ void loop() {
       // parser.adjustZ();
       Serial.println(axis);
       parser.jogAxes(axis);
+      // temp_speed = analogRead(A5);
+      // parser.motorsEnable();
+      // Serial.println(temp_speed);
+      // analogWrite(5, map(temp_speed, 0, 1023, 0, 255));
       break;
     case Idle_Exit:
       parser.motorsEnable();
       Serial.write("?");
+      temp_speed = analogRead(A5);
+      analogWrite(5, map(temp_speed, 0, 1023, 0, 255));
       state = Etching;
-      analogWrite(5, 105);
-      parser.clearDecoder();
-      parser.setupTimerInterrupt();
+      // parser.clearDecoder();
+      // parser.setupTimerInterrupt();
       break;
     case Etching:
       parser.Listening(&state);
+      // parser.motorsEnable();
+      // temp_speed = analogRead(A5);
+      // Serial.println(temp_speed);
+      // analogWrite(5, map(temp_speed, 0, 1023, 0, 255));
       break;
     case Etching_Exit:
       parser.motorsDisable();
-      parser.freeTimerInterrupt();
+      // parser.freeTimerInterrupt();
       state = Idle;
       axis = Free;
       break;

@@ -174,7 +174,7 @@ void GParse::DrawLine(float newx, float newy){
                 over -= dx_;
                 stepperY_->move(diry_);
             }
-            delayMicroseconds(100);
+            delayMicroseconds(1500);
         }
     }
     else { 
@@ -186,7 +186,7 @@ void GParse::DrawLine(float newx, float newy){
                 over -= dy_;
                 stepperX_->move(dirx_);
             }
-            delayMicroseconds(100);
+            delayMicroseconds(1500);
         }
     }
 
@@ -316,7 +316,7 @@ void GParse::jogAxes(AxisState axis){
 }
 
 void GParse::setupTimerInterrupt(){
-    TCCR2B |= _BV(CS22) | _BV(CS21) | _BV(CS2O);
+    TCCR2B |= _BV(CS22) | _BV(CS21) | _BV(CS20);
     TIMSK2 |= _BV(TOIE2);
 }
 
