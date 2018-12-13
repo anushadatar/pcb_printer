@@ -54,26 +54,31 @@ class Streamer():
     
         time.sleep(10)
         
-        # Is this cheating?
-        try:
-            attempt_connection()
-        except:
-            try:
-                print("Connection attempt two.")
-                attempt_connection()
-            except:
-                try:
-                    print("Connection attempt three.")
-                    attempt_connection()
-
-    def attempt_connection():
         self.serialPort.write("!".encode('utf-8'))
-            while (self.serialPort.readline().decode('utf-8') != "?"):
-            continue
-        # Allow arduino to stay in relative mode unless we are streaming a gcode file
-        if self.opts.stream:
-            self.serialPort.write(" G90\n".encode('utf-8'))
-            print("------------Stream Mode------------")
+
+        time.sleep(3)
+    #     # Is this cheating?
+    #     try:
+    #         self.attempt_connection()
+    #     except:
+    #         try:
+    #             print("Connection attempt two.")
+    #             self.attempt_connection()
+    #         except:
+    #             try:
+    #                 print("Connection attempt three.")
+    #                 self.attempt_connection()
+    #             except:
+    #                 print("Okay, give up")
+
+    # def attempt_connection(self):
+    #     self.serialPort.write("!".encode('utf-8'))
+    #     while (self.serialPort.readline().decode('utf-8') != "?"):
+    #         continue
+    #     # Allow arduino to stay in relative mode unless we are streaming a gcode file
+    #     if self.opts.stream:
+    #         self.serialPort.write(" G90\n".encode('utf-8'))
+    #         print("------------Stream Mode------------")
 
 
     def open_gcode(self):
