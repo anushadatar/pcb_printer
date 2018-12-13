@@ -20,11 +20,11 @@ def engraving_ask_path(bit_diameter=ENGRAVING_DIAMETER):
     path =  tkinter.filedialog.askopenfilename()
     
     # Assemble appropriate script.
-    script_string = ["bash pi_run.sh", path, str(bit_diameter)]
+    script_string = "bash pi_run.sh" + str(path) +  str(bit_diameter)
     # Call the script.
     subprocess.call(script_string, shell=True) 
 
-def engraving_choose_recent(bit_diameter=ENGRAVING_DIAMETER, drive_path="/home/anusha/test"):
+def engraving_choose_recent(bit_diameter=ENGRAVING_DIAMETER, drive_path="/media/pi/5614-2C01"):
     """
     Grabs most recent file off of flash drive or other mounted folder.
     """
@@ -35,7 +35,8 @@ def engraving_choose_recent(bit_diameter=ENGRAVING_DIAMETER, drive_path="/home/a
     path = files[0]
 
     # Assemble the script.
-    script_string = ["bash pi_run.sh", path, str(bit_diameter)] 
+    script_string = "bash pi_run.sh " + str(path) + " "  + str(bit_diameter)
+    print(script_string)
     # Call the script.
     subprocess.call(script_string, shell=True)
 
