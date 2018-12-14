@@ -48,8 +48,8 @@ def create_gui():
     """ 
     gui = tkinter.Tk()
 
-    engraving_choose_file_button = tkinter.Button(gui, text="Choose File (Engraving)", command=engraving_ask_path)
-    engraving_choose_recent_button = tkinter.Button(gui, text="Use most recent file on USB flash drive (Engraving)", command=engraving_choose_recent)
+    engraving_choose_file_button = tkinter.Button(gui, text="Choose File", command=engraving_ask_path)
+    engraving_choose_recent_button = tkinter.Button(gui, text="Use most recent file on USB flash drive", command=engraving_choose_recent)
 
     engraving_choose_recent_button.pack()
     engraving_choose_file_button.pack()
