@@ -70,16 +70,8 @@
                   <li class="nav-item">
                     <a class="nav-link" href="system.html">Architecture</a>
                   </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Mechanical
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="mechanical-overview.html">Overview</a>
-                      <a class="dropdown-item" href="table.html">Compound Table</a>
-                      <a class="dropdown-item" href="spindle.html">Spindle Assembly</a>
-                      <a class="dropdown-item" href="enclosure.html">Enclosure</a>
-                    </div>
+                  <li class="nav-item">
+                    <a class="nav-link" href="mechanical.html">Electrical</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="electrical.html">Electrical</a>
@@ -125,9 +117,10 @@
 
                   <center><iframe width="560" height="315" src="https://www.youtube.com/embed/jSKyoZaL6o8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
                   <h3 class="heading1"><center>Mechanical</center></h3>
-                  <p>The first iteration of the compound table had a wider footprint and used custom 3D printed sliders as linear bearings
-                    on the 8020 frame members. The lead-screw bushings, motor coupers, and a variety of other parts were 3D printed, and all of 
+                  <p>The first iteration of the compound table had a wider footprint and used custom 3D printed sliders as linear bearings on the 80/20 frame members. The lead-screw bushings, motor couplers, and a variety of other parts were 3D printed, and all of 
                   the flat components were laser-cut. By using these rapid prototyping strategies, we were able to quickly develop our hardware platform, but most of the pieces did not prove to be robust enough for continued use.</p>
+                  <center><img src="images/Assembly1.png" alt="software" height="220"></center>
+
 
                   <h3 class="heading1"><center>Electrical</center></h3>
                   <p>In the very first sprint, we prototyped the electrical and controls system for the X-Y compound table on a breadboard. It included:</p>
@@ -146,7 +139,7 @@
                     able to cover both linear movement solely in the X or Y direction and diagonal movement that required X-Y coordination. By the
                     end of the sprint, our gcode parser was able to execute the arc command and draw a circle, which requires use of both axes.
                   </p>
-                  <img src="images/sp1software.JPG" alt="software" height="220">
+                  <center><img src="images/sp1software.JPG" alt="software" height="220"></center>
                   <br>
                   <h3 class="heading1"><center>Sprint Two Planning</center></h3>
                   <p> After completing this sprint, our primary concern was how including the cutting tool on the z-axis. So, for <a href="sprint_two.html"> Sprint Two </a> we decided to prioritze incorporating and controlling the motor on the z axis.
