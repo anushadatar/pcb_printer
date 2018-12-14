@@ -71,8 +71,16 @@
                   <li class="nav-item">
                     <a class="nav-link" href="system.html">Architecture</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="mechanical.html">Mechanical</a>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Mechanical
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="mechanical-overview.html">Overview</a>
+                      <a class="dropdown-item" href="table.html">Compound Table</a>
+                      <a class="dropdown-item" href="spindle.html">Spindle Assembly</a>
+                      <a class="dropdown-item" href="enclosure.html">Enclosure</a>
+                    </div>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="electrical.html">Electrical</a>
@@ -99,55 +107,107 @@
             <div class="container">                                                 
               <div class="row">                                                     
                 <div class="col-sm-12 heading">                                     
-                  <h1 data-aos="Fade-right" data-aos-delay="300"> The Final Sprint </h1>
-                  <h5 data-aos="Fade-left" data-aos-delay="300"> The End to all Endmills. </h5>
+                  <h1 data-aos="Fade-right" data-aos-delay="300"> Mechanical Overview </h1>
+                  <h5 data-aos="Fade-left" data-aos-delay="300"> Something witty. </h5>
                 </div>                                                              
               </div>                                                                
             </div>                                                                  
           </div>                                                                    
-        </header>
-        <!-- Centered text container. -->
-        <div class="container">
-          <div class="row" data-aos="fade-up" data-aos-duration="300">
-            <div class="col-md-12">
-              <div class="inner-content">
-                <br>
-                <h3><center>Goal</center></h3>
-
-                <h5> Our final goal was to create as functional, refined, and user-friendly a product as possible.
-                </h5>
-                <br>
-
-                <h3 class="heading1"><center>Demonstration</center></h3>
-
-                <center><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Vu4nOFw8urE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></center>
-
-                <br>
-                
-                <center><h3>Mechanical</h3></center>
-                <p> In the final stretch, designed and fabricated the safety housing and electronics housing. We drilled through-holes for all of the bolts in the frame and milled standoffs to hold the linear motion rods for each axis and integrated our waterjet aluminum plates.</p>
-                <center><img src="images/Assembly4.png" alt="software" height="220"></center>
-
-                <center><h3>Electrical</h3></center>
-                 <center><figure>
-                  <img src="images/final_pcb.jpg" alt="led pcb" width="400">
-                  <figcaption>A PCB to light up LEDs we milled during the final sprint.</figcaption>
-                </figure></center>
-
-                For the electronics, we focused on the process of wire management: we taped and heat shurnk segments of wires together in order to allow for easier integration with the mechanical housing. It allowed us to avoid problems we had previously such as wires wrapping around the mechanical systems. We also started to crimp cables to make our electrical connections more secure and effective. At the same time, there were still some weaknesses due to the large amount of magnetic wire underneath our protoboard.
-              .
-
-                <center><h3>Software</h3></center>
-                On the software side, we more fully integrated the Rasberry Pi system so that a user can plug in a USB flash drive and choose the most recent file on the drive by pressing a single button on a GUI on the touchscreen - the program will then recognize whether the file is a .gbr or .drl and process it accordingly. They can also elect to select a file from the machine file system. The user interface system is also enhanced by larger buttons on the RasberryPi application interface.
-                Alternatively, we also developed the option for the user to SSH into the RasberryPi remotely on their own laptop and start the milling process remotely - this is advantageous because users do not have to install dependencies to mill a PCB.
+        </header> 
+        
+          <!-- Centered image container. -->
+          <div class="container">
+            <div class="row" data-aos="fade-up" data-aos-delay="300">
+              <div class="col-md-12">
+             
+                <center><img src="images/Explode-1.jpg" style="width: 50%"></center>
+                <p> The mechanical sytem is comprised of the components for holding, moving, and cutting the PCBs as well as the enclusure to keep the user safe. It was designed and fabricated to maximise precision and robustness while making use of scrap and other freely available materials to get as much as possible out of the budget.</p>
               </div>
-              <hr>
             </div>
           </div>
-        </div>
 
 
 
 
-      </body>
-      </html>
+        <section class="blog-page">
+          <div class="container">
+
+            <div class="row" data-aos="fade-up" data-aos-delay="300">
+              <div class="col-lg-6 col-sm-6">
+                <div class="row">
+                  <div class="col-lg-6 col-md-12">
+                   <div class="image-one">
+                     <a href="goals.html">
+                     <img src="images/goals-cover-photo.jpg" alt="" class="img-thumbnail blog-1">
+                   </a>
+                   </div>
+                 </div>
+                 <div class="col-lg-6 col-md-12">
+                  <div class="blog-column1">
+                   <h5><a href="goals.html"><b>Goals, Timeline, and Workflow</b></a></h5>
+                   <p>Two sentence summary of project goals page.</p>
+                   <a class="btn btn-primary" href="goals.html" role="button">Read More>></a>
+                 </div>
+               </div>
+             </div>
+           </div>
+           <div class="col-lg-6 col-sm-6">
+            <div class="row">
+              <div class="col-lg-6 col-md-12">
+                <div class="image-one">
+                  <a href="media.html">
+                 <img src="images/media-cover-photo.jpg" alt="" class="img-thumbnail blog-1">
+                  </a>
+               </div>
+             </div>
+             <div class="col-lg-6 col-md-12">
+              <div class="blog-column1">
+               <h5><a href="media.html"><b>Media</b></a></h5>
+               <p>Two sentence summary of media page.</p>
+               <a class="btn btn-primary" href="media.html" role="button">Read More>></a>
+             </div>
+           </div>
+         </div>
+       </div> 
+                  <div class="col-lg-6 col-sm-6">
+            <div class="row">
+              <div class="col-lg-6 col-md-12">
+                <div class="image-one">
+                  <a href="media.html">
+                 <img src="images/media-cover-photo.jpg" alt="" class="img-thumbnail blog-1">
+                  </a>
+               </div>
+             </div>
+             <div class="col-lg-6 col-md-12">
+              <div class="blog-column1">
+               <h5><a href="media.html"><b>Media</b></a></h5>
+               <p>Two sentence summary of media page.</p>
+               <a class="btn btn-primary" href="media.html" role="button">Read More>></a>
+             </div>
+           </div>
+         </div>
+       </div> 
+
+       <div class="col-lg-6 col-sm-6">
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+           <div class="image-one">
+            <a href="sprint_one.html">
+             <img src="images/sprint-one-cover-photo.jpg" alt="" class="img-thumbnail blog-1">
+            </a>
+           </div>
+         </div>
+         <div class="col-lg-6 col-md-12">
+          <div class="blog-column1">
+           <h5><a href="sprint_one.html"><b>Sprint One</b></a></h5>
+           <p>What does one fry a circle with?</p>
+           <a class="btn btn-primary" href="sprint_one.html" role="button">Read More>></a>
+         </div>
+       </div>
+     </div>
+   </div>
+</div>
+</div>
+</section>
+</body>
+</html>
