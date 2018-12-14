@@ -157,17 +157,19 @@
               <p>Following the Idle Exit state, the system begins etching and enters the operational state. In this case, the Arduino actively listens on the serial port and runs a gcode parser. It holds the spindle speed constant throughout while the Arduino controls the stepper motors for each of the three axes according to the results of parsing the gcode sent to the Arduino from the Raspberry Pi. The program terminates when the Arduino receives an ending signal from the Raspberry pi along with the final line of gcode to interpret and execute. Once the last command has been executed, the Arduino will return to the Idle state.
               </p>
               <h3><center><a href="https://github.com/anushadatar/pcb_printer/tree/master/software">Software Architecture</a></center></h3>
+              The software framework handles the user interaction necessary to obtain a file to etch the contents of, creating toolpaths from that file, formatting the toolpaths, and communicating each line of execution to the real-time microcontroller. 
               <br>
-              <p> Some words and things </p>
+              The user interface contains a tkinter-based graphical user interface (GUI)
+              <p> Due to the fact that FlatCAM's raw output has inconsistencies that complicate gcode parsing firmware, the program **gcode_format.py** processes the output gcode file and arranges its contents. Then, "gcode_stream.py" takes in the formatted gcode and tries to send the gcode commands line by line to the Arduino to execute. The Arduino and the gcoder streamer use a custom handshaking protocol to make sure that a new command will only be dispatched in the wake of last command's successful execution. 
+              </p>
               <br>
               <h3> Dependencies </h3>
               Both the firmware and software systems leverage a large number of existing frameworks and libraries. Those frameworks (and associated requirements for functionality) include:
               <ul>
                 <li> Arduino </li>
                 <ul>
-                  <li></li>
-                  <li></li>
-                  <li></li>
+                  <li><a href="https://github.com/laurb9/StepperDriver">StepperDriver</a>: Arduino library for A4988, DRV8825, DRV8834, DRV8880 and generic two-pin (DIR/STEP) stepper motor drivers </li>
+                  <li><a href="https://www.pjrc.com/teensy/td_libs_Encoder.html">Encoder Library</a>: Encoder counts pulses from quadrature encoded signals, which are commonly available from rotary knobs, motor r shaft sensors and other position sensors. </li>
                 </ul>
                 <li> Python 2</li>
                 <ul>
@@ -177,16 +179,17 @@
                 </ul>
                 <li> Python 3</li>
                 <ul>
-                  <li></li>
-                  <li></li>
-                  <li></li>
+                  <li><a href="https://pythonhosted.org/pyserial/">pySerial</a></li><br>
+                  <li><a href="https://docs.python.org/3/library/optparse.html">optparse</a></li><br>
+                  <li><a href="https://docs.python.org/3/library/time.html">time</a></li><br>
+                  <li><a href="https://docs.python.org/3/library/sys.html">sys</a></li><br>
+                  <li><a href="https://docs.python.org/3/library/os.html">os</a></li>
                 </ul>
 
-                <li> Flatcam </li>
+                <li> <a href="https://bitbucket.org/jpcgt/flatcam/downloads/">Flatcam</a> </li>
                 <ul>
-                  <li></li>
-                  <li></li>
-                  <li></li>
+                  <li><a href="https://www.riverbankcomputing.com/software/sip/download">SIP</a></li><br>
+                  <li><a href="https://www.riverbankcomputing.com/software/pyqt/download">PyQt4</a></li>
                 </ul>
 
 

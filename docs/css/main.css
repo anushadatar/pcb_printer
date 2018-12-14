@@ -8,8 +8,7 @@ body {width: 100%;margin: 0px;padding: 0px;font-size: 16px;line-height: 1.8;over
 body,
 html { height: 100%;}
 .btn:focus,.btn:active {outline: none !important;box-shadow: none;}
-h1,h2,h3,h4,h5,h6,ul {margin:0px;padding:0px}
-ul {list-style-type: none;margin: 0;padding: 0;display: block;}
+h1,h2,h3,h4,h5,h6 {margin:0px;padding:0px}
 li { display: inline-block;}
 a {cursor: pointer;}
 a:hover {text-decoration: none;}
