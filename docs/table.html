@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Etch a Schetch</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <link rel="stylesheet" href="css/main.css">
+  
+</head>
+<body>
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
+  <!-- Custom JavaScript -->
+  <script src="js/animate.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    $('.carousel').carousel({
+     interval: 2000
+   })
+    window.onscroll = function() {myFunction()};
+    var header = document.getElementById("myHeader");
+    var sticky = header.offsetTop;
+    function myFunction() {
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    }
+  </script>
+  <script>
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox();
+    });
+  </script>
+
+  <!-- Navigation -->
+    <!--- For every new page, be sure to add the file.html and then include
+          a link to it here as well so it can be accessed. 
+          Make sure that the href is just to the page in the hierarchy and
+          not absolutely addressed so it can be used on the olin server. -->
+          <nav id="myHeader" class="header navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+              <a class="navbar-brand" href="index.html"><img src="images/Etcha.png" alt="logo" height="80"></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home
+                      <span class="sr-only">(current)</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="system.html">Architecture</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Mechanical
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="mechanical-overview.html">Overview</a>
+                      <a class="dropdown-item" href="table.html">Compound Table</a>
+                      <a class="dropdown-item" href="spindle.html">Spindle Assembly</a>
+                      <a class="dropdown-item" href="enclosure.html">Enclosure</a>
+                    </div>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="electrical.html">Electrical</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="software.html">Software</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="process.html">Process</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="budget.html">Budget</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="team.html">Team</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+          
+          <header class="banner">                                                     
+            <div class="gradient"></div>                                              
+            <div class="container">                                                 
+              <div class="row">                                                     
+                <div class="col-sm-12 heading">                                     
+                  <h1 data-aos="Fade-right" data-aos-delay="300"> X-Y Compound Table </h1>
+                  <h5 data-aos="Fade-left" data-aos-delay="300"> <h5>Something Witty </h5>
+                </div>                                                              
+              </div>                                                                
+            </div>                                                                  
+          </div>                                                                    
+        </header>  
+
+        <div class="row" data-aos="fade-up" data-aos-duration="300">
+          <div class="container">
+            <div class="row" data-aos="fade-up" data-aos-duration="300">
+              <div class="col-md-12">
+                <div class="inner-content">
+                  <center><h3>Final Design</h3></center>
+                  <p>The robust compound table holds the workpiece and allows for accurate movement the X and Y axes.
+                  They slide along round ways using linear ball-bearings and are driven by lead-screws.</p>
+                   <center><h4>Frame</h3></center>
+                   <p>The table frame was made from 80/20 brand aluminum framing extrusions. 
+                   This material was chosen due to the fact that there was ample 80/20 stock 
+                   freely available to us in the lab, as well as because the form of the rods offered many 
+                   fixturing options (and served as our linear motion rods in the first sprint). The bars were 
+                   milled to length and tapped, with around 40 through holes drilled for the ¼-20 bolts that hold 
+                   the table together. Laser cut brackets ensured that the corners remained square.</p>
+                   <center><h4>Work Holding</h3></center>
+                   <center><img src="images/Toe_Clamps.JPG" style="width: 50%"></center>
+                   <p>The platen is made from a piece of 0.5” MDF which was laser cut to ensure precision hole locations. It attaches to four linear bearings which proved to be much more rigid than two. Additionally, it has a total of four  0.25” holes for mounting adjustable toe clamps for securely fixturing the work pieces.</p>
+                   <center><h4>Lead Screw and Ways Assembly</h3></center>
+                   <center><img src="images/Mill Parts-3.JPG" style="width: 50%"></center>
+                   <p>Each axis on the table is driven by a ⅜ -12 lead screw and nut. The square brass lead nuts are press-fit into slots in the milled aluminum lead nut holders which are attached to the platen and lower mounting plate with countersunk ¼-20 bolts to give a flat surface for workpiece clamping. The ways are 8mm case hardened stainless steel with matching linear ball-bearings and fit into 8mm reamed holes in the aluminum ways holders. The motor mounts are made from water-jet aluminum plate with counterbored holes to allow the cap head M3 screws to be flush for interference reasons.
+</p>
+                   <center><h3>Iterations</h3></center>
+                   <center><h4>Sprint 1</h4></center>
+                   <center><img src="images/Sprint 1 Table.JPG" style="width: 50%"></center>
+                   <p>The first iteration of the compound table had a wider footprint and used custom 3D printed sliders as 
+                    linear bearings on the 8020 frame members. The lead-screw bushings, motor coupers, and a variety of other 
+                  parts were 3D printed, and all of the flat components were laser-cut.</p>
+                  <h4>Sprint 2</h4>
+                  <center><img src="images/Sprint 2 Table.JPG" style="width: 50%"></center>
+                  <p>In sprint 2, we switched to using 8mm rods and linear bearings from a 3D printer slide set. We also 
+                    narrowed the footprint and added the frame for the z-axis. Some captive nuts/bolts were replaced with 
+                  through-bolts.</p>
+                  <h4>Sprint 3</h4>
+                  <center><img src="images/Sprint 3 Table.JPG" style="width: 50%"></center>
+                  <p>The platen and lower mounting plate were replaced with ½” MDF with countersunk M4 screws and laser-cut
+                  toe clamps were added for more secure work holding.</p>
+                  <h4>Final Push</h4>
+                  <p>All motor/ways hardware was replaced with milled or waterjet aluminum plate for increased rigidity. 
+                    Additionally, the x-axis ways were moved further apart to increase stability. We also drilled through 
+                  holes to replace all captive bolts for precision and ease of assembly.</p>
+              </div>
+              <hr>
+            </div>
+          </div>
+        </div>
+        <!-- End centered container. -->
+
+
+
+      </body>
+      </html>
