@@ -51,17 +51,18 @@ def create_shellfile(filename, tool_diameter):
     elif (filename[len(filename)-3 : len(filename)] == "gbr"):                  
         tcl_file.write("open_gerber " + filename + "\n")          
         tcl_file.write("isolate " + name + " -dia " + tool_diameter + " -outname geometry.gbr_iso -combine\n")
+        tcl_file.write("cncjob geometry.gbr_iso -tooldia " + tool_diameter + " -outname cnc.gbr_iso_cnc\n")
+        tcl_file.write("write_gcode cnc.gbr_iso_cnc ../pcb_printer/software/current_job.gcode")
+ 
+    elif (filename[len(filename)-3 : len(filename)] == "drl"):
+        tcl_file.write("open_excellon " + filename + " -outname excellon \n")
+        tcl_file.write("drillcncjob excellon -outname drillcnc job - drillz 0.059 -travelz 0.1 feedrate 3 \n")
+        tcl_file.write("write_gcode drlcncjob ../pcb_printer/software/current-job.gcode")
     else:
-        print ("Filetype not supported.")
-        return None
-
-    # General geometry configuration. 
-#    tcl_file.write("isolate " + name + " -dia " + tool_diameter + " -outname geometry.gbr_iso -combine\n")
-    tcl_file.write("cncjob geometry.gbr_iso -tooldia " + tool_diameter + " -outname cnc.gbr_iso_cnc\n")
-    tcl_file.write("write_gcode cnc.gbr_iso_cnc ../pcb_printer/software/current_job.gcode")
-                                                                                
+        print("Filetype not supported. Executing last gcode command generated.")
+                                                                        
     tcl_file.close()  
 
 args = process_args()
-print(args.filename)
+print("Filename : " + str(args.filename))
 create_shellfile(args.filename, args.tool_diameter)

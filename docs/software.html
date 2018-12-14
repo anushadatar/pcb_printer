@@ -157,40 +157,34 @@
               <p>Following the Idle Exit state, the system begins etching and enters the operational state. In this case, the Arduino actively listens on the serial port and runs a gcode parser. It holds the spindle speed constant throughout while the Arduino controls the stepper motors for each of the three axes according to the results of parsing the gcode sent to the Arduino from the Raspberry Pi. The program terminates when the Arduino receives an ending signal from the Raspberry pi along with the final line of gcode to interpret and execute. Once the last command has been executed, the Arduino will return to the Idle state.
               </p>
               <h3><center><a href="https://github.com/anushadatar/pcb_printer/tree/master/software">Software Architecture</a></center></h3>
-              <br>
-              <p> Due to the fact that FlatCAM's raw output often result in unssucessful gcode parsing on the Arduino end, "gcode_format.py" would take in the path of a FlatCam output gcode file and format its content to be much more standarized gcode commands.
-                "gcode_stream.py" would then take in the formatted gcode and try to send the commands line by line for the Arduino to execute. A sort of custom handshaking protocal is also
-                established between Arduino and the gcoder streamer to make sure that a new command would only be dispatched in the wake of last command's successful
-                execution. 
+              The software framework that runs on the computer (Windows PC, Ubuntu environment, Raspberry Pi, etc.) handles the user interaction necessary to obtain a file to etch the contents of, creating toolpaths from that file, formatting the toolpaths, and communicating each line of execution to the real-time microcontroller. While our fully integrated product uses the Raspberry Pi as its computing platform, our code is also compatible with most Linux machines capable of running bash and python. 
+              <br> 
+              <p>The user interface contains a tkinter-based graphical user interface (GUI) that can be used to either select the file from the computer's file system or choose the most recent file on a USB flash drive plugged into the machine. The GUI then triggers a shell script which executes the software pipeline.</p>
+              <center><img src="images/gui_menu.png" alt="GUI Screenshot" height="80"></center>
+              <p> The software framework then leverages FlatCAM to create toolpaths based on the tool diameter associated with the filetype of the chosen file. It displays the image to trace and the intended toolpath before continuing. </p> 
+              <p> Due to the fact that FlatCAM's raw output has inconsistencies that complicate gcode parsing firmware, the program <i>gcode_format.py</i> processes the output gcode file and arranges its contents. Then, <i>gcode_stream.py</i> takes in the formatted gcode and tries to send the gcode commands line by line to the Arduino to execute. The Arduino and the gcoder streamer use a custom handshaking protocol to make sure that a new command will only be dispatched in the wake of last command's successful execution. 
               </p>
               <br>
               <h3> Dependencies </h3>
               Both the firmware and software systems leverage a large number of existing frameworks and libraries. Those frameworks (and associated requirements for functionality) include:
               <ul>
-                <li> Arduino </li>
+                <li> <a href="https://www.arduino.cc/en/Main/Software"> Arduino </a> </li>
                 <ul>
-                  <li></li>
-                  <li></li>
-                  <li></li>
+                  <li><a href="https://github.com/laurb9/StepperDriver">StepperDriver</a>: Arduino library for A4988, DRV8825, DRV8834, DRV8880 and generic two-pin (DIR/STEP) stepper motor drivers </li>
+                  <li><a href="https://www.pjrc.com/teensy/td_libs_Encoder.html">Encoder Library</a>: Encoder counts pulses from quadrature encoded signals, which are commonly available from rotary knobs, motor r shaft sensors and other position sensors. </li>
                 </ul>
-                <li> Python 2</li>
+                <li> <a href="https://www.python.org/downloads/release/python-371/"> Python 3 </a></li>
                 <ul>
-                  <li></li>
-                  <li></li>
-                  <li></li>
+                  <li><a href="https://pythonhosted.org/pyserial/">pySerial</a></li><br>
+                  <li><a href="https://docs.python.org/3/library/optparse.html">optparse</a></li><br>
+                  <li><a href="https://docs.python.org/3/library/time.html">time</a></li><br>
+                  <li><a href="https://docs.python.org/3/library/sys.html">sys</a></li><br>
+                  <li><a href="https://docs.python.org/3/library/os.html">os</a></li>
                 </ul>
-                <li> Python 3</li>
+                <li> <a href="https://bitbucket.org/jpcgt/flatcam/downloads/">Flatcam</a> </li>
                 <ul>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                </ul>
-
-                <li> Flatcam </li>
-                <ul>
-                  <li></li>
-                  <li></li>
-                  <li></li>
+                  <li><a href="https://www.riverbankcomputing.com/software/sip/download">SIP</a></li><br>
+                  <li><a href="https://www.riverbankcomputing.com/software/pyqt/download">PyQt4</a></li>
                 </ul>
 
 

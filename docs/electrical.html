@@ -123,13 +123,12 @@
             <div class="row" data-aos="fade-up" data-aos-duration="300">
               <div class="col-md-12">
                 <div class="inner-content">
-                  <center>
                     <br>
-                    <p>The electrical subsystem has two main parts: the <b>real time control system</b> and the <b>user interface system</b>. The real time control system is based on an Arduino Uno V3. The user interface system is a Rasberry Pi B+ with a LCDTFT touchscreen. The two systems via serial through a USB cable.</p>
+                    <p>The electrical subsystem has two main parts: the <b>real time control system</b> and the <b>user interface system</b>. The real time control system is based on an Arduino Uno V3. The user interface system is a Rasberry Pi B+ with a LCDTFT touchscreen, a rotary encoder with two LEDs, and an emergency stop switch. The two systems via serial through a USB cable.</p>
                     <h3 class="heading1"><center>User Interface System</center></h3>
-                    #TODO Make this a nice image of the front panel with the GUI.
-                    <center><img src="images/logo2.jpg" alt="logo" height="80"></center>
-                    <p2>A Raspberry Pi B+ commanding a Thin-Film-Transistor Liquid-Crystal Display touchscreen, provides the user with a visual interface with which to execute the printing process and abtracts away  It also communicates with Arduino over Serial to transmit gcode commands and exchange information on operation status.</p2>
+                    <center><img src="images/panel.jpg" alt="Electrical Panel" style="width:30%"></center>
+                    <p2>A Raspberry Pi B+ commanding a Thin-Film-Transistor Liquid-Crystal Display touchscreen provides the user with a visual interface with which to execute the printing process and abtracts away the more complicated detail of the system implemtnation. It also communicates with Arduino over Serial to transmit gcode commands and exchange information on operation status.</p2>
+                    <p>The quadrature encoder with pushbutton switch allows for manual axis adjustment for zeroing (the LEDs indicate which axis the encoder is controlling hte motion of), and the emergency stop cuts the power from every component except for the fan in case of a problematic situation. </p> 
                     <br>
                     <h3 class="heading1"><center>Real Time Control System</center></h3>
                     <p>We chose to use an Arduino as our main real-time controller because it provides a fast method by which to achieve a viable product despite its limitations. Instead of purchasing a pre-designed Arduino shield which would limit our freedom while writing firmware and configuring our integration with mechanical systems, we (ironically) decided to create our own perforated protoboard that easily sits on top of an Arduino Uno similar to other Arduino shields. We also created two extension boards which connect to the main board for increased functionality and modularity. By doing so, we were able to both customize our electronics easily and leave room for future expansions as needed. </p>
@@ -142,7 +141,6 @@
                       process. The power relay is separately controlled by the Arduino, ensuring the safe physical disconnect from a dangerous cutting 
                     tool from power when it is not enabled.</p>
                     <center><img src="images/electrical_dcdrive.jpg" alt="logo" style="width:30%"></center>
-                    <p>An E-stop switch is connected to the outer housing of the gantry for users to cut off power quickly in case of emergencies.</p>
                     <br>
                     <h3 class="heading1"><center>Power Management</center></h3>
                     <br>
@@ -150,7 +148,6 @@
                     <p>Thermal management is another important part of the electrical system because of the large amount of current that flows through 
                       the system to power the DC motor and three different stepper motors. Each stepper motor draws about 0.5A while the DC motor pulls about 1.3A. For passive heat dissipation, we placed heat sinks on all three A4988 stepper motor modules and we used a large through-hole N-MOSFET with a large heat conductive component. We also used a computer fan to circulate air actively across the electronics.
                     </p>
-                  </center>
                 </div>
                 <hr>
               </div>
