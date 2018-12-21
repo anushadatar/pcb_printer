@@ -6,7 +6,7 @@
 python3 create_shellfile.py --file $1 --tool-diameter $2 
 
 # Run the Flatcam software to create the gcode file.
-python2 ../../FlatCAM-8.5/FlatCAM.py --shellfile=/home/anusha/pcb_printer/software/create_gcode.tcl
+python2 ../../../FlatCAM-8.5/FlatCAM.py --shellfile=/home/anusha/code/pcb_printer/software/create_gcode.tcl
 
 # Format the gcode to be more compatible with the parser.
 python3 gcode_format.py -p current_job.gcode
