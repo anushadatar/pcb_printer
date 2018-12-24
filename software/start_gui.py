@@ -15,19 +15,25 @@ def engraving_ask_path(bit_diameter=ENGRAVING_DIAMETER):
     """
     Asks user to specify file path of the associated file.  
     Runs engraving based on specification.
+    
+    bit_diameter = The diameter (in inches) of the associated cutting tool.
     """
     print("Path script called from GUI.")
     path =  tkinter.filedialog.askopenfilename()
     
     # Assemble appropriate script.
-    script_string = "bash anusha_run.sh " + str(path) + " " + str(bit_diameter)
+    script_string = "bash run.sh " + str(path) + " " + str(bit_diameter)
     print(script_string)
     # Call the script.
     subprocess.call(script_string, shell=True) 
 
-def engraving_choose_recent(bit_diameter=ENGRAVING_DIAMETER, drive_path="/home/anusha/test"):
+def engraving_choose_recent(drive_path="", bit_diameter=ENGRAVING_DIAMETER):
     """
     Grabs most recent file off of flash drive or other mounted folder.
+   
+    drive_path = Still nominally a TODO, need to make a universal way of 
+                 mounting and interfacing with flash drives on the fly. 
+    bit_diameter = The diameter (in inches) of the associated cutting tool.
     """
     # Get most recent file on USB stick.
     print("Recent file script called from GUI?")
@@ -36,7 +42,7 @@ def engraving_choose_recent(bit_diameter=ENGRAVING_DIAMETER, drive_path="/home/a
     path = files[0]
 
     # Assemble the script.
-    script_string = "bash anusha_run.sh " + str(path) + " " + str(bit_diameter) 
+    script_string = "bash run.sh " + str(path) + " " + str(bit_diameter) 
     print(script_string) 
    # Call the script.
     subprocess.call(script_string, shell=True)
@@ -54,7 +60,5 @@ def create_gui():
     engraving_choose_recent_button.pack()
     engraving_choose_file_button.pack()
     gui.mainloop()
-
-
 
 create_gui()
