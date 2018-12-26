@@ -6,8 +6,8 @@ The main path planning is handled by the third-party tool Flatcam. Installation 
 are included below. Raspberry Pi setup requires additional adjustments to the Flatam stack - contact us for details!
 
 
-## Dev Framework: Ubuntu Setup Instructions
-While the Etch A Schech uses a Raspberry Pi to setup up computation and screaming, it can often be more convenient to use a machine with Ubuntu for software and testing. To set up this framework, first install the Flatcam Dependencies:
+## Linux Setup Instructions
+While the Etch A Schech uses a Raspberry Pi to setup up computation and streaming, it can often be more convenient to use a machine with Linux for software and testing. To set up this framework, first install the Flatcam Dependencies:
 Some of the dependencies will need to be installed separately:
  - [SIP](https://www.riverbankcomputing.com/software/sip/download)
  
@@ -44,10 +44,11 @@ python FlatCAM.py
 ~~~~
 A flatcam window should launch following this final command. 
 
-Once the proper software has been installed, configure the necessary environment variables to configure the run framework.
+Once the proper software has been installed, configure the necessary environment variables to run the bash scripts.
 To do that, instantiate pointers to this software folder and to your flatcam installation by adding the following lines to your .bashrc:
-
 ~~~~
 export $ETCH_SW_DIR='/PATH/TO/SW/DIR'
 export $FLATCAM_DIR='/PATH/TO/FLATCAM/INSTALL'
 ~~~~
+
+This system has been validated on Ubuntu 16.04, Ubuntu 18.04, and Raspbian Jessie.
