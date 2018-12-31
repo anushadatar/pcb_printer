@@ -10,8 +10,7 @@ The firmware directory contains the production source code for the real-time con
 The [gcode_parse/](https://github.com/anushadatar/pcb_printer/tree/master/firmware/gcode_parse) directory contains code that, with the necessary dependencies, can be compiled for the Arduino Uno V3 and flashed onto the chip by means of the [gcode_parse.ino](https://github.com/anushadatar/pcb_printer/blob/master/firmware/gcode_parse/gcode_parse.ino) file. 
 
 ## Software
-The software directory contains the software to run the high-level computation necessary to determine and send commands to the real-time controller. With the necessary dependencies, the 
-
+The software directory contains the software to run the high-level computation necessary to determine and send commands to the real-time controller. 
 
 ## Dependencies
 The [software page of the project website](https://anushadatar.github.io/pcb_printer/software.html) contains links to all of the external software packages necessary to run this code. For more software setup details for the computational platform, use the software [guide](https://github.com/anushadatar/pcb_printer/blob/master/software/README.md). Note that a new run file with the proper pathing is necessary for any new environment, and for the code to run properly the environment must be UNIX-compliant.
